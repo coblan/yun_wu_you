@@ -7,6 +7,9 @@ class Yewu(models.Model):
     title = models.CharField('主标题',max_length=200)
     sub_title=models.CharField('副标题',max_length=600)
     
+class SoldType(models.Model):
+    label=models.CharField('类型名称',max_length=100)
+    
     
 
 
