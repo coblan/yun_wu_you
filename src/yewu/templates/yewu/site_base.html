@@ -1,0 +1,124 @@
+{% extends 'site_frame/base.html' %}
+{% load static %}
+{% load jsonify %}
+
+{% block site-head %}
+    <title>云无忧</title>
+{% endblock %}
+
+
+{% block site-content %}
+
+<script>
+
+    header_bar_menu = {{ header_bar_menu | jsonify }}
+    page_menu = {{ page_menu |　jsonify }}
+    crt_page_name = {{ crt_page_name | jsonify }}
+
+
+    $(function(){
+
+        new Vue({
+            el:'#header-bar',
+            data:{
+//                menu : [
+//                    {label:'首页',link:'/p/zhanxun',name:'zhanxun'},
+//                    {label:'工商注册',link:'/p/3d',name:'3d'},
+//                    {label:'VR展馆',link:'/p/vr',name:'vr'},
+//                    {label:'全景现场',link:'/p/fullscreen',name:'fullscreen'},
+//                ],
+                menu:header_bar_menu,
+
+                crt_page_name:crt_page_name,
+                username:page_data.username,
+                page_menu: page_menu,
+                search_head:{
+                    placeholder:'搜索所需服务，如 公司注册'
+                },
+                search_args:{},
+//                all_menu:[
+//                    {label:'注册公司',name:'zhucegongshi'},
+//                    {label:'财税记账',name:'caisuijizhang'},
+//                    {label:'知识产权',name:'zhishichanquan'}
+//                ]
+            }
+        })
+
+    })
+</script>
+
+
+<div id="header-bar" class="header">
+
+    <div class="wrap" style="margin-top: 1em;">
+
+        <div class="flex" style="justify-content: space-between">
+            <a href="/index" class="log-link" style="display: flex">
+                <img src="http://www.kuaifawu.com/static/img/common/logo_510.png" alt=""/>
+            </a>
+
+            <com-search-kuaifawu :head="search_head" :search_args="search_args"></com-search-kuaifawu>
+        </div>
+
+
+
+
+
+        <!--<div class="search-panel">-->
+        <!--<img class="search-btn" src="/static/home/12.png" alt="">-->
+        <!--<input type="text" placeholder="搜索">-->
+        <!--</div>-->
+
+        <!--<div v-if="username" style="z-index:200" class="login" >-->
+        <!--欢迎,<span v-text="username"></span>-->
+        <!--<a href="/accounts/logout">[退出]</a>-->
+        <!--</div>-->
+
+        <!--<div v-else style="z-index:200" class="login" >-->
+        <!--<a href="/accounts/login" class="login-link">登录</a>-->
+        <!--<span>&nbsp;|&nbsp;</span>-->
+        <!--<a href="/accounts/regist">注册</a>-->
+        <!--</div>-->
+    </div>
+
+<div style="border-bottom: 1px solid #02c9ff;">
+    <div class="wrap" style="margin-top: 1em;">
+        <div class="flex" style="justify-content: space-between">
+            <com-kuaifawu-menu label="全部服务分类" :menu="page_menu" ></com-kuaifawu-menu>
+
+            <com-header-menu :menu="menu" :active="crt_page_name"></com-header-menu>
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="center-content">
+    {% block page_content %}
+
+    {% endblock %}
+</div>
+
+
+
+
+<div class="footer wrap" style="position: relative;background-color: #f3f3f3;height: 130px;margin-top: 20px;">
+    <div style="text-align: center;padding-top: 1em;">
+        <span>成都云无忧科技有限公司 &nbsp;&nbsp;&nbsp;&nbsp;蜀ICP备16015654号</span>
+    </div>
+    <div style="text-align: center;padding-top: 0.5em;">
+        <a>@2014-2018 Jongde Software LLC All rights reserved.</a>
+    </div>
+
+</div>
+
+
+{% endblock %}

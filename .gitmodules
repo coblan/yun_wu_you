@@ -1,0 +1,6 @@
+[submodule "src/static/lib"]
+	path = src/static/lib
+	url = https://github.com/coblan/lib.git
+[submodule "src/helpers"]
+	path = src/helpers
+	url = git@github.com:coblan/helpers.git

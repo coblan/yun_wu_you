@@ -13,9 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
-
+from hello.menu_engine import PcMenu
+from django.conf.urls.static import static
+from django.conf import settings
+from helpers.authuser.engin_view import AuthEngine
+from django.views.generic import RedirectView 
+from yewu.views import Home
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/([\w\.]+)/?$',AuthEngine.as_view(),name=AuthEngine.url_name),
+    
+    url(r'^d/',include('helpers.director.urls'),name='director'),
+    url(r'^pc/([\w\.]+)/?$',PcMenu.as_view(),name=PcMenu.url_name),
+    url(r'^pc/?$',RedirectView.as_view(url='/pc/Business')),    
+    
+    url(r'p/home/?$',Home.as_view(),)
+    
 ]
+
+
+if settings.DEBUG:
+    urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
