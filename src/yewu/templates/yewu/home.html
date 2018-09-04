@@ -25,13 +25,45 @@
         new Vue({
             el:'#there'
         })
+
+
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 30,
+            effect: 'fade',
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+
     })
 </script>
 
 <div id="there" class="wrap" style="height: 100%">
 
+<div>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image:url(img/fade1.jpg)"></div>
+            <div class="swiper-slide" style="background-image:url(img/fade2.jpg)"></div>
+            <div class="swiper-slide" style="background-image:url(img/fade3.jpg)"></div>
+            <div class="swiper-slide" style="background-image:url(img/fade4.jpg)"></div>
+            <div class="swiper-slide" style="background-image:url(img/fade5.jpg)"></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
 
-    <h1 class="center-vh">这里是全景展示</h1>
+</div>
 
 
 </div>
