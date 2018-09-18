@@ -83,7 +83,10 @@
 
             <div class="soldtype">
                 <span class="left-label">类 型：</span>
-                <span :class='["item clickable",{"active":crt_soldtype==soldtype}]' @click="set_crt_soldtype(soldtype)" v-for="soldtype in yewu.soldtype" v-text="soldtype.label"></span>
+                <div style="display: inline-block">
+                    <span :class='["item clickable",{"active":crt_soldtype==soldtype}]' @click="set_crt_soldtype(soldtype)" v-for="soldtype in yewu.soldtype" v-text="soldtype.label"></span>
+                </div>
+
             </div>
 
             <div class="place">
