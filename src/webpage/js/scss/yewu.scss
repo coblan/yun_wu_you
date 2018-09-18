@@ -1,0 +1,134 @@
+$desp_width:900px;
+$grey_color: #f5f7fa;
+$title_height:40px;
+
+.yewu{
+
+  .head{
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+    .cover{
+
+      img{
+        width: 400px;
+        height: 400px;
+      }
+    }
+
+  .head-panel{
+
+      margin-left: 4em;
+
+      h2{
+        margin-top: 0;
+      }
+      .left-label{
+          display: inline-block;
+          padding-left: 0.4em;
+      }
+      .price{
+        background-color: #f5f5f5;
+        padding: 0.4em;
+        padding-left: 0;
+        margin-top: 1em;
+          .crt-price{
+            display: inline-block;
+            margin-left: 1em;
+            margin-right: 2em;
+            font-size: 200%;
+            color: #ff7056;
+          }
+          .org-price{
+              display: inline-block;
+          }
+      }
+
+    .soldtype{
+      margin-top:2em;
+        .item{
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border: 1px solid #c3c3c3;
+            margin: 0 1em;
+
+            &.active{
+              color: red;
+              border: 1px solid #d9524a;
+            }
+        }
+    }
+
+    .place{
+        margin-top: 2em;
+
+      select{
+        display: inline-block;
+          width:auto;
+        margin-left: 1em;
+      }
+    }
+  }
+
+  .order-soldtype{
+      border-top:1px dashed #d4d4d4;
+      margin-top: 2em;
+
+      .buy-btn-wrap{
+          padding-left: 4em;
+          padding-top:3em;
+
+        .btn{
+          width: 200px;
+        }
+      }
+
+  }
+
+  .saler-panel{
+      height: 10em;
+      background-color: $grey_color;
+      margin-bottom: 2em;
+      position: relative;
+  }
+
+  .navi-tab{
+     z-index: 9999999;
+  }
+  .nav-tab{
+     width: $desp_width;
+      //height: $title_height;
+      //background-color: $grey_color;
+  }
+  .tui-saler{
+    flex-grow: 10;
+    margin-left: 1em;
+    height: $title_height;
+    background-color: $grey_color;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e2e2e2;
+
+      .saler-info{
+          position: absolute;
+          width: 100%;
+          left: 0;
+          height: 300px;
+          background-color: white;
+          border: 1px solid #e2e2e2;
+          border-top:none;
+          top:40px;
+      }
+  }
+  .desp{
+      position: relative;
+      width: $desp_width;
+      border: 1px solid #d4d4d4;
+      border-top:none;
+
+      img{
+        max-width: 100%;
+      }
+  }
+
+}

@@ -1,0 +1,83 @@
+
+$action_width : 200px;
+$menu_link_width:600px;
+$action_text_left_margin:40px;
+
+.kuaifawu-menu{
+    position: relative;
+    z-index: 100;
+
+    .menu-button{
+        padding:0.6em 0;
+        width: $action_width;
+        display: inline-block;
+        color: white;
+        background-color: #02c9ff;
+        padding-left: $action_text_left_margin;
+    }
+    .actions{
+        position: absolute;
+        top:100%;
+        background-color: rgba(20,20,20,0.8);
+        left: 0;
+        width: $action_width;
+        color: white;
+        z-index: 200;
+
+        .menu-item {
+          border-bottom: 1px solid grey;
+          padding: 1em;
+            padding-left: $action_text_left_margin;
+
+          &.active{
+            background-color: white;
+            color: black;
+          }
+        }
+
+    }
+    .action-icon{
+            display: inline-block;
+            margin-right: 0.6em;
+    }
+    .menu-links{
+        position: absolute;
+        top:100%;
+        background-color: white;
+        left: $action_width - 2px;
+        min-height: 200px;
+        padding: 1em;
+        width: $menu_link_width;
+        border-bottom: 1px solid #02c9ff;
+        border-top:1px solid #02c9ff;
+        border-left: 1px solid #c9c9c9;
+        border-right: 1px solid #c9c9c9;
+        z-index: 100;
+        .link{
+            display: inline-block;
+            margin: 10px 20px;
+        }
+        td.group{
+            padding: 1em;
+            padding-right: 3em;
+        }
+        td.link-panel{
+            border-bottom: 1px solid #e5e5e5;
+            padding: 1em;
+            padding-left: 0;
+        }
+        a{
+            font-size: 90%;
+            text-decoration: none;
+            color: #6d6d6d;
+
+            &.highlight{
+                color: #ff7c7e;
+            }
+            &:hover{
+                color: #73b4ff;
+            }
+
+        }
+    }
+}

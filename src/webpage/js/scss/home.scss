@@ -1,0 +1,19 @@
+body{
+  background-color: #ebebeb;
+}
+.recomPanels{
+  padding: 1em;
+
+
+  &>.title{
+      color: #52d8ff;
+      display: inline-block;
+      margin-right: 1em;
+  }
+  &>.sub-title{
+      color: grey;
+  }
+  .item-wrap{
+      padding: 1em;
+  }
+}

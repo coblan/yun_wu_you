@@ -24,16 +24,31 @@ class PcMenu(BaseEngine):
         crt_user = self.request.user
         menu=[
             #{'label':_('DashBoard'),'url':page('home'),'icon':fa('fa-home'), 'visible':True}, 
-            
-            
-            #{'label':_('页面管理'),'icon':fa('fa-home'), 'visible':True,'submenu':[
-                #{'label':'展讯页面','url':page('expolink.zhanxun'),'visible':can_touch(User, crt_user)},
-                #]}, 
-            
-            {'label':_('业务管理'),'url':page('Business'),'icon':fa('fa-home'), 'visible':True}, 
-            {'label':_('区域管理'),'url':page('Area'),'icon':fa('fa-home'), 'visible':True}, 
 
- 
+            
+            #{'label':_('业务管理'),'url':page('Business'),'icon':fa('fa-home'), 'visible':True, }, 
+            
+            {'label':'业务管理','icon':fa('fa-user'),'visible':True,
+                 'submenu':[
+                    {'label':'区域','url':page('Area'),'visible':can_touch(User, crt_user)},
+                    {'label':'业务分组','url':page('yewugroup'),'visible':can_touch(User, crt_user)},
+                    {'label': '业务', 'url': page('Business'),'icon':fa('fa-home'), 'visible':True,}, 
+                    {'label':'业务员管理','url':page('saler'),'visible':can_touch(User, crt_user)},
+                    {'label': '业务推广', 'url': page('YewuRecomPanel'), 'visible': True,}
+                           ]},  
+            #{'label':_('区域管理'),'url':page('Area'),'icon':fa('fa-home'), 'visible':True}, 
+            {'label':'菜单管理','icon':fa('fa-user'),'visible':True,
+                 'submenu':[
+                    {'label': '主菜单', 'url': page('mainmenu'), 'visible': True,}, 
+                    {'label': '业务链接分组', 'url': page('actiongroup'),'visible': True,}, 
+                     {'label': '业务链接', 'url': page('action'),'visible': True,}, 
+                   ]},  
+            
+            {'label':'其他页面管理','icon':fa('fa-user'),'visible':True,
+                 'submenu':[
+                     {'label':'滚动图片','url':page('banner'),'visible':can_touch(User, crt_user)},
+                   ]},  
+
             {'label':_('User'),'icon':fa('fa-user'),'visible':True,
                  'submenu':[
                      {'label':_('User'),'url':page('jb_user'),'visible':can_touch(User, crt_user)},

@@ -1,0 +1,27 @@
+
+$back_color: #02c9f0;
+
+.search-kuaifawu{
+    border: 1px solid $back_color;
+    display: inline-block;
+    position: relative;
+    background-color: white;
+    padding-left: 1em;
+    height: 34px;
+    input{
+        width: 20em;
+        border: none;
+        outline:none
+    }
+
+    .search-btn{
+        display: inline-block;
+        //height: 100%;
+        background-color: $back_color;
+        color: white;
+        padding: 6px 20px;
+    }
+
+
+
+}

@@ -10,7 +10,9 @@
 {% block site-content %}
 <link href="https://cdn.bootcss.com/Swiper/4.3.0/css/swiper.min.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
-
+<script src="{{ js_config.js_lib.element }}"></script>
+<link href="{{ js_config.js_lib.element_css }}" rel="stylesheet">
+<script src="{{ js_config.js_lib.yun_wu_you }}"></script>
 <script>
 
     header_bar_menu = {{ header_bar_menu | jsonify }}
@@ -54,12 +56,13 @@
 
     <div class="wrap" style="margin-top: 1em;">
 
-        <div class="flex" style="justify-content: space-between">
+        <div class="flex" style="justify-content: space-between;align-items: center;">
             <a href="/index" class="log-link" style="display: flex">
-                <img src="http://www.kuaifawu.com/static/img/common/logo_510.png" alt=""/>
+                <!--<img src="http://www.kuaifawu.com/static/img/common/logo_510.png" alt=""/>-->
+                <img style="height: 60px" src="/static/images/one_station.png" alt="">
             </a>
 
-            <com-search-kuaifawu :head="search_head" :search_args="search_args"></com-search-kuaifawu>
+            <com-search-kuaifawu  :head="search_head" :search_args="search_args"></com-search-kuaifawu>
         </div>
 
 
@@ -86,7 +89,7 @@
 <div style="border-bottom: 1px solid #02c9ff;">
     <div class="wrap" style="margin-top: 1em;">
         <div class="flex" style="justify-content: space-between">
-            <com-kuaifawu-menu label="全部服务分类" :menu="page_menu" ></com-kuaifawu-menu>
+            <com-kuaifawu-menu label="全部服务分类" :menu_group="page_menu" ></com-kuaifawu-menu>
 
             <com-header-menu :menu="menu" :active="crt_page_name"></com-header-menu>
 

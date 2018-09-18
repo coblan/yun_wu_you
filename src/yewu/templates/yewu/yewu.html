@@ -1,0 +1,177 @@
+{% extends 'yewu/site_base.html' %}
+{% load static %}
+{% load jsonify %}
+
+{% block page_content %}
+<link href="https://cdn.bootcss.com/Swiper/4.3.0/css/swiper.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
+<script src="/static/lib/stickUp.min.js"></script>
+<script>
+
+</script>
+
+<script>
+
+    crt_page_name='yewu'
+
+    yewu={{ yewu | jsonify }}
+    salers = {{ salers | jsonify }}
+</script>
+
+<style>
+
+</style>
+
+<script>
+    $(function(){
+        new Vue({
+            el:'#there',
+            data:{
+                yewu:yewu,
+                salers:salers,
+                crt_soldtype:''
+            },
+            created:function(){
+
+                if(yewu.soldtype.length!=0){
+                    this.crt_soldtype = this.yewu.soldtype[0]
+                }
+            },
+            mounted:function(){
+                setTimeout(function(){
+                   ex.stickup('.navi-tab')
+//                    $('.navi-tab').stickUp({
+//                        //enabling marginTop with the 'auto' setting
+//                        marginTop: 'auto'
+//                    });
+                })
+
+            },
+            methods:{
+                set_crt_soldtype:function(soldtype){
+                    this.crt_soldtype=soldtype
+                },
+                on_tab_click:function(e){
+                    var name= e.name
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#"+name).offset().top-40
+                    }, 1000);
+                }
+            }
+        })
+
+    })
+</script>
+
+<div id="there" class="wrap yewu" style="height: 100%">
+
+    <div class="flex head">
+
+        <div class="cover">
+            <img :src="yewu.cover" alt="">
+        </div>
+
+        <div class="head-panel flex-grow">
+            <h2 v-text="yewu.title"></h2>
+            <span v-text="yewu.sub_title"></span>
+            <div class="price">
+                <span class="left-label">价 格:</span><span class="crt-price" >¥
+                <span v-text="crt_soldtype.price"></span>元
+            </span>
+                <span>市场价:</span><span class="org-price" v-text="crt_soldtype.org_price"></span>
+            </div>
+
+            <div class="soldtype">
+                <span class="left-label">类 型：</span>
+                <span :class='["item clickable",{"active":crt_soldtype==soldtype}]' @click="set_crt_soldtype(soldtype)" v-for="soldtype in yewu.soldtype" v-text="soldtype.label"></span>
+            </div>
+
+            <div class="place">
+                <span class="left-label">地 区：</span>
+                <select name="" id="" class="form-control">
+                    <option v-for="opt in yewu.area_options" value="opt.value" v-text="opt.label"></option>
+                </select>
+            </div>
+
+            <div class="order-soldtype">
+
+                <div class="buy-btn-wrap">
+                    <button class="btn btn-warning">立即下单</button>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="saler-panel">
+        <div class="center-v">
+            <com-plain-saler v-for="saler in salers" :saler="saler"></com-plain-saler>
+        </div>
+
+    </div>
+
+
+    <div class="navi-tab wrap">
+        <div class="flex">
+            <div class="nav-tab">
+                <!--<div>服务介绍</div>-->
+
+                <el-tabs @tab-click="on_tab_click" class="only-tab" type="border-card">
+                    <el-tab-pane name="service-introduce" label="服务介绍"></el-tab-pane>
+                    <el-tab-pane name="after-sold" label="售后保障"></el-tab-pane>
+                    <el-tab-pane name="about-us" label="关于我们"></el-tab-pane>
+                </el-tabs>
+
+            </div>
+
+            <div class="tui-saler">
+                <div class="center-vh">服务人员推介</div>
+                <div class="saler-info">
+                    <com-rich-saler :saler="salers[0]"></com-rich-saler>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="desp">
+        <div v-html="yewu.desp" id="service-introduce"></div>
+
+        <div class="panel panel-default" id="after-sold">
+            <div class="panel-heading">售后保障</div>
+            <div class="panel-body">
+                <h2>我们承诺</h2>
+                <div>关于服务质量的反馈，我们会第一时间专人处理。保证及时解决您的问题。</div>
+                <h2>投诉渠道</h2>
+                <ol>
+                    <li>拨打400-6683-666，选择投诉；</li>
+                    <li>点击在线投诉按钮，描述详情；</li>
+                    <li>通过微博、微信公众号等方式，联系我们</li>
+                </ol>
+                <h2>处理流程</h2>
+                <img src="/static/images/flowImg2.png" alt="" style="max-width: 100%">
+            </div>
+        </div>
+
+        <div class="panel panel-default" id="about-us">
+            <div class="panel-heading">关于我们</div>
+            <div class="panel-body">
+                我们是一站式创业法律服务平台，旨在帮助创业及小微企业更低成本、更高效的解决法律问题。
+
+                目前快法务已获得千万美元级B轮融资，服务覆盖北京、上海、深圳、广州等13个城市，未来将开辟更加广泛、多元的服务通路以保障便捷体验。
+
+                创业路上，希望与您携手同行！
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+</script>
+
+</body>
+{% endblock %}
