@@ -24,6 +24,10 @@ $action_text_left_margin:40px;
         color: white;
         z-index: 200;
 
+        .action{
+            height: 60px;
+            position: relative;
+        }
         .menu-item {
           border-bottom: 1px solid grey;
           padding: 1em;
@@ -44,7 +48,7 @@ $action_text_left_margin:40px;
         position: absolute;
         top:100%;
         background-color: white;
-        left: $action_width - 2px;
+        left: $action_width ;
         min-height: 200px;
         padding: 1em;
         width: $menu_link_width;
@@ -74,7 +78,8 @@ $action_text_left_margin:40px;
             &.highlight{
                 color: #ff7c7e;
             }
-            &:hover{
+
+            &[href]:not([href=""]):hover{
                 color: #73b4ff;
             }
 

@@ -39,9 +39,9 @@ class PcMenu(BaseEngine):
             #{'label':_('区域管理'),'url':page('Area'),'icon':fa('fa-home'), 'visible':True}, 
             {'label':'菜单管理','icon':fa('fa-user'),'visible':True,
                  'submenu':[
-                    {'label': '主菜单', 'url': page('mainmenu'), 'visible': True,}, 
-                    {'label': '业务链接分组', 'url': page('actiongroup'),'visible': True,}, 
-                     {'label': '业务链接', 'url': page('action'),'visible': True,}, 
+                    {'label': '第一层菜单', 'url': page('mainmenu'), 'visible': True,}, 
+                    {'label': '第二层菜单', 'url': page('actiongroup'),'visible': True,}, 
+                     {'label': '第三层菜单', 'url': page('action'),'visible': True,}, 
                    ]},  
             
             {'label':'其他页面管理','icon':fa('fa-user'),'visible':True,

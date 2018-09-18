@@ -23,8 +23,18 @@ Vue.component('com-kuaifawu-menu',{
 
             <!--业务菜单，展开部分-->
             <com-kuaifawu-menu-links class="menu-links" v-show="active_menu.name"
-                :menu="active_menu"></com-kuaifawu-menu-links>
+                :menu="active_menu" :style="my_style"></com-kuaifawu-menu-links>
     </div>`,
+    computed:{
+        my_style:function(){
+            return {height: 60*this.menu_group.length +'px'}
+        }
+    },
+    mounted:function(){
+        //setTimeout(function(){
+        //    $('.kuaifawu-menu-link').height( 60* this.menu_group.length )
+        //})
+    },
     methods:{
         on_mouseleave:function(){
             this.expand=false
@@ -36,20 +46,21 @@ Vue.component('com-kuaifawu-menu',{
 
 Vue.component('com-kuaifawu-menu-item',{
     props:['menu'],
-    template:`<div>
-        <span class="action-icon"><i class="fa fa-circle-o"></i></span>
-
-        <span v-text="menu.label"></span>
+    template:`<div class="action">
+        <div class="center-v">
+            <span class="action-icon"><i class="fa fa-circle-o"></i></span>
+            <span v-text="menu.label"></span>
+        </div>
     </div>`
 })
 
 Vue.component('com-kuaifawu-menu-links',{
     props:['menu'],
-    template:`<div class="kuaifawu-menu-link">
+    template:`<div class="kuaifawu-menu-link" >
         <table>
             <tr class="action_group" v-for="group in menu.action_group_list">
                 <td class="group">
-                    <label v-text="group.label"></label>
+                    <label style="font-size: 110%"><a :href="group.link" v-text="group.label"></a></label>
                 </td>
                 <td class="link-panel">
                     <span class="link" v-for="act in group.action_list">
@@ -58,7 +69,5 @@ Vue.component('com-kuaifawu-menu-links',{
                 </td>
             </tr>
         </table>
-
-
     </div>`
 })
