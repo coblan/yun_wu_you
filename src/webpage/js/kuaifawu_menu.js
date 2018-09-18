@@ -27,7 +27,7 @@ Vue.component('com-kuaifawu-menu',{
     </div>`,
     computed:{
         my_style:function(){
-            return {height: 60*this.menu_group.length +'px'}
+            return {height: 55*this.menu_group.length +'px'}
         }
     },
     mounted:function(){
