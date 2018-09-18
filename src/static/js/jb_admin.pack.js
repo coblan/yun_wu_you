@@ -1872,10 +1872,9 @@ var mix_table_data = {
                 //    self.update_or_insert(e.new_row, e.old_row)
                 //})
                 //pop_fields_layer(new_row,kws.heads,kws.ops,pop_id)
-
+                self.crt_row = crt_row;
                 if (kws.tab_name) {
                     self.show_tab(kws.tab_name);
-                    self.crt_row = crt_row;
 
                     //self.$emit('operation',{fun:'switch_to_tab',tab_name:kws.tab_editor,row:crt_row})
                     //self.switch_to_tab(kws.tab_editor)

@@ -82,6 +82,7 @@ class BusinessPage(TablePage):
               'par_field': 'pk',
               'tab_field': 'yewu',
               'table_ctx': SoldTypeTable(crt_user= self.crt_user).get_head_context(),
+              'show': 'pk != null',
               'visible': True,
           }
         ]
