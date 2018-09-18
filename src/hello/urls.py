@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^pc/?$',RedirectView.as_view(url='/pc/Business')),    
     
     url(r'p/home/?$',Home.as_view(),), 
+    url(r'$',Home.as_view(),), 
+    
     url(r'^yewu/?$', YewuPage.as_view () ), 
     
 ]
