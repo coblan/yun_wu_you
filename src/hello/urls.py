@@ -28,11 +28,11 @@ urlpatterns = [
     url(r'^d/',include('helpers.director.urls'),name='director'),
     url(r'^pc/([\w\.]+)/?$',PcMenu.as_view(),name=PcMenu.url_name),
     url(r'^pc/?$',RedirectView.as_view(url='/pc/Business')),    
-    
-    url(r'p/home/?$',Home.as_view(),), 
+    url(r'^yewu/?$', YewuPage.as_view (), 
+    url(r'^p/home/?$',Home.as_view(),), 
     url(r'$',Home.as_view(),), 
     
-    url(r'^yewu/?$', YewuPage.as_view () ), 
+    ), 
     
 ]
 
