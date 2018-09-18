@@ -1425,6 +1425,7 @@ var mix_fields_data = {
             }
         },
         dataSaver: function dataSaver(callback) {
+            // 该函数已经被废弃
             var post_data = [{ fun: 'save_row', row: this.row }];
             ex.post('/d/ajax', JSON.stringify(post_data), function (resp) {
                 callback(resp.save_row);
@@ -3618,6 +3619,11 @@ var ajax_fields = {
                 var kws = this.tab_head.after_save.kws;
                 // new_row ,old_row
                 fun(this, new_row, kws);
+
+                //if(  self.par_row._director_name == row._director_name){
+                //    // ，应该将新的属性值 去更新par_row
+                //    ex.vueAssign(self.par_row,row)
+                //}
             }
             this.row = new_row;
         }

@@ -1592,6 +1592,11 @@ var vuetool = exports.vuetool = {
             }
         }
     },
+    vueAssign: function vueAssign(old_row, new_row) {
+        for (var key in new_row) {
+            Vue.set(old_row, key, new_row[key]);
+        }
+    },
     vueBroadCall: function vueBroadCall(self, fun, kws) {
         var rt = [];
         cusBroadCall(self, fun, kws, rt);
