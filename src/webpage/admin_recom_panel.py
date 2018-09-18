@@ -106,6 +106,15 @@ class YewuRecomItemForm(ModelFields):
     class Meta:
         model = YewuRecomItem
         exclude = []
+    
+    
+    def dict_row(self, inst): 
+        if getattr(inst, 'pk', None):
+            return {
+                '_html_yewu' : r'<a href="/yewu?yewu=%(pk)s" target="_blank">%(yewu)s</a>' % {'pk': inst.pk, 'yewu': str(inst.yewu),},
+            }   
+        else:
+            return {}
         
 
 director.update({
