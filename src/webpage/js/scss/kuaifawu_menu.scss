@@ -23,7 +23,7 @@ $action_text_left_margin:40px;
         width: $action_width;
         color: white;
         z-index: 200;
-
+        min-height: 440px;
         .action{
             height: 55px;
             position: relative;
@@ -49,7 +49,7 @@ $action_text_left_margin:40px;
         top:100%;
         background-color: white;
         left: $action_width ;
-        min-height: 200px;
+        min-height: 440px;
         padding: 1em;
         width: $menu_link_width;
         border-bottom: 1px solid #02c9ff;
