@@ -4,11 +4,11 @@ Vue.component('com-kuaifawu-menu',{
     props:['label','menu_group'],
     data:function(){
         return {
-            expand:false,
+            expand:true,
             active_menu:{}
         }
-    }, //
-    template:`<div class="kuaifawu-menu" @mouseenter="expand=true" @mouseleave="on_mouseleave()">
+    }, //@mouseenter="expand=true" @mouseleave="on_mouseleave()"
+    template:`<div class="kuaifawu-menu"  @mouseleave="on_mouseleave()">
 
             <span  class="menu-button">
             <span class="action-icon"> <i class="fa fa-list-ul"></i></span>
@@ -37,7 +37,7 @@ Vue.component('com-kuaifawu-menu',{
     },
     methods:{
         on_mouseleave:function(){
-            this.expand=false
+            //this.expand=false
             this.active_menu={}
         }
     }

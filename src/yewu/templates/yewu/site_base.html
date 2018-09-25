@@ -13,12 +13,15 @@
 <script src="{{ js_config.js_lib.element }}"></script>
 <link href="{{ js_config.js_lib.element_css }}" rel="stylesheet">
 <script src="{{ js_config.js_lib.yun_wu_you }}"></script>
+<script src="/static/city.min.js"></script>
+
 <script>
 
     header_bar_menu = {{ header_bar_menu | jsonify }}
     page_menu = {{ page_menu |　jsonify }}
     crt_page_name = {{ crt_page_name | jsonify }}
 
+    crt_city = localStorage.getItem(`crt_city`) || '成都'
 
     $(function(){
 
@@ -39,6 +42,7 @@
                 search_head:{
                     placeholder:'搜索所需服务，如 公司注册'
                 },
+                crt_city:crt_city,
                 search_args:{},
 //                all_menu:[
 //                    {label:'注册公司',name:'zhucegongshi'},
@@ -53,7 +57,9 @@
 
 
 <div id="header-bar" class="header">
-
+    <div>
+        <com-big-city-select v-model="crt_city"></com-big-city-select>
+    </div>
     <div class="wrap" style="margin-top: 1em;">
 
         <div class="flex" style="justify-content: space-between;align-items: center;">

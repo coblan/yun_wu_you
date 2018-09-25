@@ -1,0 +1,56 @@
+$bodrder_color: #3cb0ff;
+
+.place-input{
+
+    &:hover{
+        .input{
+          border: 1px solid $bodrder_color;
+          &:after{
+            content: '';
+            display: inline-block;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100% ; //calc(100% - 1px) ;
+            height: 7px;
+            z-index: 901;
+            background-color: white;
+          }
+
+        }
+      .item-contain{
+        border: 1px solid $bodrder_color;
+      }
+    }
+    position: absolute;
+    display: inline-block;
+    .input{
+      position: relative;
+      display: inline-block;
+      padding: 0 0.7em;
+
+        span{
+            display: inline-block;
+            margin: 0 0.5em;
+        }
+    }
+  .item-contain{
+    position: absolute;
+    top:100%;
+    left: 0;
+    background-color: white;
+    z-index: 900;
+
+    width: 460px;
+      .item{
+          display: inline-block;
+          margin: 0.3em 0.3em;
+          width: 5em;
+          cursor: pointer;
+
+          &:hover{
+              color: $bodrder_color;
+          }
+      }
+  }
+}
