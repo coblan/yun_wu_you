@@ -125,7 +125,7 @@ class YewuPage(Home):
         salers = [to_dict(inst) for inst in Saler.objects.all()]
         
         
-        random_salers = random.sample(salers, min(len(salers), 6))
+        random_salers = random.sample(salers, min(len(salers), 3))
         random_saler = random.choice(salers)
         return {
             'yewu': yewu_dict,
