@@ -3,13 +3,13 @@ $sm_tab_width:140px;
 .com-yewu-rich-item{
     position: relative;
     display: inline-block;
-    width: $sm_tab_width;
-    height: $sm_tab_width;
+    width: 180px;
+    height: 130px;
     background-color: white;
     transition: all 0.6s ease;
     top:0;
     margin-left: 2em;
-    margin: 10px;
+    margin-top: 20px;
 
     &:first-child{
       float: left;
@@ -37,6 +37,10 @@ $sm_tab_width:140px;
         margin: 1em 0;
       }
   }
+  .price{
+      color: red;
+  }
+
   $border_color:#69d8ff;
   &:hover{
       top:-4px;

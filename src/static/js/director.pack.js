@@ -647,6 +647,8 @@ var baseInput = exports.baseInput = {
 
 };
 
+window._baseInput = baseInput;
+
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2633,6 +2635,7 @@ var table_fields = {
     },
     components: _basic.baseInput
 };
+
 Vue.component('com-table-fields', table_fields);
 
 /***/ }),

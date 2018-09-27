@@ -21,6 +21,7 @@ from django.conf import settings
 from helpers.authuser.engin_view import AuthEngine
 from django.views.generic import RedirectView 
 from yewu.views import Home, YewuPage
+from yewu.page_rich import RichPagePort
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/([\w\.]+)/?$',AuthEngine.as_view(),name=AuthEngine.url_name),
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^pc/?$',RedirectView.as_view(url='/pc/Business')),    
     url(r'^yewu/?$', YewuPage.as_view ()), 
     url(r'^p/home/?$',Home.as_view(),), 
+    url(r'^rich/([\w\.]+)/?$',RichPagePort.as_view(),), 
     url(r'^$',Home.as_view(),), 
     
 ]

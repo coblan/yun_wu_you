@@ -1,0 +1,79 @@
+.footer{
+  background-color: #434343;
+  color: white;
+  position: relative;
+
+  width: 100%;
+  .links{
+      padding-top: 30px;
+      min-height: 200px;
+  }
+  .menu-panel{
+    margin-right: 60px;
+    position: relative;
+
+    .menu-1{
+      align-self:flex-start;
+      display: inline-block;
+      width: 200px;
+      margin-left: 1em;
+      ul{
+          padding-left: 0;
+          li{
+            list-style:none;
+          }
+      }
+
+      a{
+        text-decoration: none;
+        color: #aaaaaa;
+
+        &:hover{
+            color: inherit;
+        }
+      }
+
+    }
+
+    &:after{
+      content: ' ';
+      display: block;
+      position: absolute;
+      border-left: 2px solid #939393;
+      right: 0;
+      top:20%;
+      height: 60%;
+
+    }
+  }
+
+
+  .wechat{
+
+      width: 300px;
+      align-items:center;
+
+      img{
+          width: 140px;
+          height: 140px;
+      }
+      .slogan{
+          margin-left: 1em;
+          background-color: transparent;
+          border: none;
+          color: inherit;
+      }
+  }
+  .service{
+      padding-right: 1em;
+      .phone{
+        color: #3789d7;
+      }
+  }
+
+  .com-info{
+     border-top:1px solid #949494;
+      margin-top: 20px;
+      min-height: 110px;
+  }
+}

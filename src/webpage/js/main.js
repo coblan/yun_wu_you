@@ -8,4 +8,5 @@ import * as place_select from  './com/place_select.js'
 
 require('./scss/yewu.scss')
 require('./scss/home.scss')
+require('./scss/foot.scss')
 

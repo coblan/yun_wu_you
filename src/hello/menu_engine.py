@@ -47,6 +47,10 @@ class PcMenu(BaseEngine):
             {'label':'其他页面管理','icon':fa('fa-user'),'visible':True,
                  'submenu':[
                      {'label':'滚动图片','url':page('banner'),'visible':can_touch(User, crt_user)},
+                     {'label': 'richpage', 'url': page('richpage'),}, 
+                     {'label': 'Footer', 'url': page('footerlink'), }, 
+                     {'label': '沟通方式', 'url': page('qq_cfg'),}, 
+                     {'label': '备案信息', 'url': page('beian_cfg'),}
                    ]},  
 
             {'label':_('User'),'icon':fa('fa-user'),'visible':True,

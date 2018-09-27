@@ -57,5 +57,19 @@ class YewuRecomItem(models.Model):
     price = models.CharField('价格', max_length = 30)
     cover = PictureField('宣传图片', max_length = 200, blank = True)
     
+
+class RichPage(models.Model):
+    name = models.CharField('标识名', max_length = 100, unique = True)
+    title = models.CharField('标题', max_length = 30)
+    createtime = models.DateField('创建日期')
+    brow_count = models.CharField('浏览量', max_length = 100)
+    content = models.TextField('内容')
+
+class FooterLink(models.Model):
+    label = models.CharField('链接组', max_length = 30)
+    links = models.TextField('链接项')  #models.ManyToManyField(RichPage, verbose_name = '链接')
+    priority = models.IntegerField('优先级', default= 0)
+    
+    
     
     

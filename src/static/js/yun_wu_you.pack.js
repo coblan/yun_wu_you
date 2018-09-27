@@ -418,7 +418,7 @@ __webpack_require__(20);
 
 Vue.component('com-plain-saler', {
     props: ['saler'],
-    template: '<div class="com-plain-saler">\n        <img :src="saler.head" alt="">\n        <span v-text="saler.name"></span>\n    </div>'
+    template: '<div class="com-plain-saler flex">\n    <div class="inn-wrap">\n        <img :src="saler.head" alt="">\n        <div class="panel">\n             <label v-text="saler.name"></label>\n             <div class="info">\n              <span>\u5DE5\u4F5C\u7ECF\u9A8C\uFF1A</span><span v-text="saler.exp"></span>&nbsp;&nbsp; |&nbsp;&nbsp;\n              <span>\u597D\u8BC4\u7387\uFF1A</span><span v-text="saler.comment"></span>\n             </div>\n\n             <div class="free-phone">\n                <button class="btn btn-default btn-sm">\u514D\u8D39\u7535\u8BDD\u54A8\u8BE2</button>\n             </div>\n\n        </div>\n    </div>\n\n\n    </div>'
 });
 
 /***/ }),
@@ -432,7 +432,7 @@ __webpack_require__(21);
 
 Vue.component('com-rich-saler', {
     props: ['saler'],
-    template: '<div class="com-rich-saler">\n        <img :src="saler.head" alt="">\n        <div>\n            <span v-text="saler.name"></span>\n        </div>\n\n    </div>'
+    template: '<div class="com-rich-saler">\n        <img :src="saler.head" alt="">\n        <div>\n            <label v-text="saler.name"></label>\n\n            <button class="btn btn-default btn-sm">\u514D\u8D39\u7535\u8BDD\u54A8\u8BE2</button>\n        </div>\n        <hr>\n        <div v-text="saler.slogan" style="text-align: left">\n        </div>\n\n    </div>'
 });
 
 /***/ }),
@@ -464,14 +464,15 @@ Vue.component('com-yewu-rich-item', {
 __webpack_require__(23);
 
 Vue.component('com-kuaifawu-menu', {
-    props: ['label', 'menu_group'],
+    props: ['label', 'menu_group', 'extend_menu'],
     data: function data() {
         return {
-            expand: true,
+            org_expand: extend_menu,
+            expand: false,
             active_menu: {}
         };
     }, //@mouseenter="expand=true" @mouseleave="on_mouseleave()"
-    template: '<div class="kuaifawu-menu"  @mouseleave="on_mouseleave()">\n\n            <span  class="menu-button">\n            <span class="action-icon"> <i class="fa fa-list-ul"></i></span>\n\n               <span v-text="label"></span>\n            </span>\n\n            <div v-show="expand" class="actions">\n                <com-kuaifawu-menu-item v-for="menu in menu_group" :menu="menu"\n                    :class="[\'menu-item\',{\'active\':active_menu.name==menu.name}]" @mouseenter.native="active_menu=menu"></com-kuaifawu-menu-item>\n            </div>\n\n            <!--\u4E1A\u52A1\u83DC\u5355\uFF0C\u5C55\u5F00\u90E8\u5206-->\n            <com-kuaifawu-menu-links class="menu-links" v-show="active_menu.name"\n                :menu="active_menu" :style="my_style"></com-kuaifawu-menu-links>\n    </div>',
+    template: '<div class="kuaifawu-menu" @mouseenter="expand=true"  @mouseleave="on_mouseleave()">\n\n            <span  class="menu-button">\n            <span class="action-icon"> <i class="fa fa-list-ul"></i></span>\n\n               <span v-text="label"></span>\n            </span>\n\n            <div v-show="expand || org_expand" class="actions">\n                <com-kuaifawu-menu-item v-for="menu in menu_group" :menu="menu"\n                    :class="[\'menu-item\',{\'active\':active_menu.name==menu.name}]" @mouseenter.native="active_menu=menu"></com-kuaifawu-menu-item>\n            </div>\n\n            <!--\u4E1A\u52A1\u83DC\u5355\uFF0C\u5C55\u5F00\u90E8\u5206-->\n            <com-kuaifawu-menu-links class="menu-links" v-show="active_menu.name"\n                :menu="active_menu" :style="my_style"></com-kuaifawu-menu-links>\n    </div>',
     computed: {
         my_style: function my_style() {
             return { height: 55 * this.menu_group.length + 'px' };
@@ -484,7 +485,7 @@ Vue.component('com-kuaifawu-menu', {
     },
     methods: {
         on_mouseleave: function on_mouseleave() {
-            //this.expand=false
+            this.expand = false;
             this.active_menu = {};
         }
     }
@@ -602,7 +603,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".com-plain-saler {\n  background-color: white;\n  display: inline-block;\n  padding: 1em;\n  border: 1px solid #e2e2e2;\n  margin: 0 1em; }\n  .com-plain-saler img {\n    width: 60px;\n    height: 60px;\n    border-radius: 30px; }\n", ""]);
+exports.push([module.i, ".com-plain-saler {\n  background-color: white;\n  display: inline-block;\n  padding: 1em;\n  border: 1px solid #e2e2e2;\n  margin: 0 1em; }\n  .com-plain-saler img {\n    width: 60px;\n    height: 60px;\n    border-radius: 30px; }\n  .com-plain-saler .inn-wrap {\n    display: flex;\n    align-items: center;\n    width: 300px;\n    height: 120px; }\n    .com-plain-saler .inn-wrap label {\n      font-size: 120%; }\n    .com-plain-saler .inn-wrap .panel {\n      margin-left: 0.8em;\n      margin-bottom: 0; }\n    .com-plain-saler .inn-wrap .info {\n      margin: 0.4em auto; }\n", ""]);
 
 // exports
 
@@ -630,7 +631,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".com-yewu-rich-item {\n  position: relative;\n  display: inline-block;\n  width: 140px;\n  height: 140px;\n  background-color: white;\n  transition: all 0.6s ease;\n  top: 0;\n  margin-left: 2em;\n  margin: 10px; }\n  .com-yewu-rich-item:first-child {\n    float: left;\n    width: 290px;\n    height: 290px; }\n  .com-yewu-rich-item img {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .com-yewu-rich-item .info {\n    position: absolute;\n    top: 0;\n    z-index: 100;\n    margin: 1em; }\n    .com-yewu-rich-item .info .title {\n      color: #52d8ff; }\n    .com-yewu-rich-item .info .sub-title {\n      color: #b0b0b0;\n      margin: 1em 0; }\n  .com-yewu-rich-item:hover {\n    top: -4px;\n    border-right: 1px solid #69d8ff;\n    border-bottom: 3px solid #69d8ff;\n    border-left: 1px solid #69d8ff; }\n", ""]);
+exports.push([module.i, ".com-yewu-rich-item {\n  position: relative;\n  display: inline-block;\n  width: 180px;\n  height: 130px;\n  background-color: white;\n  transition: all 0.6s ease;\n  top: 0;\n  margin-left: 2em;\n  margin-top: 20px; }\n  .com-yewu-rich-item:first-child {\n    float: left;\n    width: 290px;\n    height: 290px; }\n  .com-yewu-rich-item img {\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n  .com-yewu-rich-item .info {\n    position: absolute;\n    top: 0;\n    z-index: 100;\n    margin: 1em; }\n    .com-yewu-rich-item .info .title {\n      color: #52d8ff; }\n    .com-yewu-rich-item .info .sub-title {\n      color: #b0b0b0;\n      margin: 1em 0; }\n  .com-yewu-rich-item .price {\n    color: red; }\n  .com-yewu-rich-item:hover {\n    top: -4px;\n    border-right: 1px solid #69d8ff;\n    border-bottom: 3px solid #69d8ff;\n    border-left: 1px solid #69d8ff; }\n", ""]);
 
 // exports
 
@@ -686,7 +687,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".yewu .head {\n  margin-top: 2em;\n  margin-bottom: 2em; }\n\n.yewu .cover img {\n  width: 400px;\n  height: 400px; }\n\n.yewu .head-panel {\n  margin-left: 4em; }\n  .yewu .head-panel h2 {\n    margin-top: 0; }\n  .yewu .head-panel .left-label {\n    display: inline-block;\n    padding-left: 0.4em; }\n  .yewu .head-panel .price {\n    background-color: #f5f5f5;\n    padding: 0.4em;\n    padding-left: 0;\n    margin-top: 1em; }\n    .yewu .head-panel .price .crt-price {\n      display: inline-block;\n      margin-left: 1em;\n      margin-right: 2em;\n      font-size: 200%;\n      color: #ff7056; }\n    .yewu .head-panel .price .org-price {\n      display: inline-block; }\n  .yewu .head-panel .soldtype {\n    margin-top: 2em; }\n    .yewu .head-panel .soldtype .item {\n      display: inline-block;\n      padding: 0.3em 0.8em;\n      border: 1px solid #c3c3c3;\n      margin: 1em 1em; }\n      .yewu .head-panel .soldtype .item.active {\n        color: red;\n        border: 1px solid #d9524a; }\n  .yewu .head-panel .place {\n    margin-top: 2em; }\n    .yewu .head-panel .place select {\n      display: inline-block;\n      width: auto;\n      margin-left: 1em; }\n\n.yewu .order-soldtype {\n  border-top: 1px dashed #d4d4d4;\n  margin-top: 2em; }\n  .yewu .order-soldtype .buy-btn-wrap {\n    padding-left: 4em;\n    padding-top: 3em; }\n    .yewu .order-soldtype .buy-btn-wrap .btn {\n      width: 200px; }\n\n.yewu .saler-panel {\n  height: 10em;\n  background-color: #f5f7fa;\n  margin-bottom: 2em;\n  position: relative; }\n\n.yewu .navi-tab {\n  z-index: 9999999; }\n\n.yewu .nav-tab {\n  width: 900px; }\n\n.yewu .tui-saler {\n  flex-grow: 10;\n  margin-left: 1em;\n  height: 40px;\n  background-color: #f5f7fa;\n  text-align: center;\n  position: relative;\n  border: 1px solid #e2e2e2; }\n  .yewu .tui-saler .saler-info {\n    position: absolute;\n    width: 100%;\n    left: 0;\n    height: 300px;\n    background-color: white;\n    border: 1px solid #e2e2e2;\n    border-top: none;\n    top: 40px; }\n\n.yewu .desp {\n  position: relative;\n  width: 900px;\n  border: 1px solid #d4d4d4;\n  border-top: none; }\n  .yewu .desp img {\n    max-width: 100%; }\n", ""]);
+exports.push([module.i, ".yewu .head {\n  margin-top: 2em;\n  margin-bottom: 2em; }\n\n.yewu .cover img {\n  width: 400px;\n  height: 400px; }\n\n.yewu .head-panel {\n  margin-left: 4em; }\n  .yewu .head-panel h2 {\n    margin-top: 0; }\n  .yewu .head-panel .left-label {\n    display: inline-block;\n    padding-left: 0.4em; }\n  .yewu .head-panel .price {\n    background-color: #f5f5f5;\n    padding: 0.4em;\n    padding-left: 0;\n    margin-top: 1em; }\n    .yewu .head-panel .price .crt-price {\n      display: inline-block;\n      margin-left: 1em;\n      margin-right: 2em;\n      font-size: 200%;\n      color: #ff7056; }\n    .yewu .head-panel .price .org-price {\n      display: inline-block; }\n  .yewu .head-panel .soldtype {\n    margin-top: 2em; }\n    .yewu .head-panel .soldtype .item {\n      display: inline-block;\n      padding: 0.3em 0.8em;\n      border: 1px solid #c3c3c3;\n      margin: 1em 1em; }\n      .yewu .head-panel .soldtype .item.active {\n        color: red;\n        border: 1px solid #d9524a; }\n  .yewu .head-panel .place {\n    margin-top: 2em; }\n    .yewu .head-panel .place select {\n      display: inline-block;\n      width: auto;\n      margin-left: 1em; }\n\n.yewu .order-soldtype {\n  border-top: 1px dashed #d4d4d4;\n  margin-top: 2em; }\n  .yewu .order-soldtype .buy-btn-wrap {\n    padding-left: 4em;\n    padding-top: 3em; }\n    .yewu .order-soldtype .buy-btn-wrap .btn {\n      width: 200px; }\n\n.yewu .saler-panel {\n  height: 13em;\n  background-color: #f5f7fa;\n  margin-bottom: 2em;\n  position: relative; }\n\n.yewu .navi-tab {\n  z-index: 9999999; }\n\n.yewu .nav-tab {\n  width: 900px; }\n\n.yewu .tui-saler {\n  flex-grow: 10;\n  margin-left: 1em;\n  height: 40px;\n  background-color: #f5f7fa;\n  text-align: center;\n  position: relative;\n  border: 1px solid #e2e2e2; }\n  .yewu .tui-saler .saler-info {\n    position: absolute;\n    width: 100%;\n    left: 0;\n    height: 300px;\n    background-color: white;\n    border: 1px solid #e2e2e2;\n    border-top: none;\n    top: 40px; }\n\n.yewu .desp {\n  position: relative;\n  width: 900px;\n  border: 1px solid #d4d4d4;\n  border-top: none; }\n  .yewu .desp img {\n    max-width: 100%; }\n", ""]);
 
 // exports
 
@@ -882,6 +883,47 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 __webpack_require__(9);
 __webpack_require__(8);
+__webpack_require__(26);
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(27);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./foot.scss", function() {
+			var newContent = require("!!../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./foot.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, ".footer {\n  background-color: #434343;\n  color: white;\n  position: relative;\n  width: 100%; }\n  .footer .links {\n    padding-top: 30px;\n    min-height: 200px; }\n  .footer .menu-panel {\n    margin-right: 60px;\n    position: relative; }\n    .footer .menu-panel .menu-1 {\n      align-self: flex-start;\n      display: inline-block;\n      width: 200px;\n      margin-left: 1em; }\n      .footer .menu-panel .menu-1 ul {\n        padding-left: 0; }\n        .footer .menu-panel .menu-1 ul li {\n          list-style: none; }\n      .footer .menu-panel .menu-1 a {\n        text-decoration: none;\n        color: #aaaaaa; }\n        .footer .menu-panel .menu-1 a:hover {\n          color: inherit; }\n    .footer .menu-panel:after {\n      content: ' ';\n      display: block;\n      position: absolute;\n      border-left: 2px solid #939393;\n      right: 0;\n      top: 20%;\n      height: 60%; }\n  .footer .wechat {\n    width: 300px;\n    align-items: center; }\n    .footer .wechat img {\n      width: 140px;\n      height: 140px; }\n    .footer .wechat .slogan {\n      margin-left: 1em;\n      background-color: transparent;\n      border: none;\n      color: inherit; }\n  .footer .service {\n    padding-right: 1em; }\n    .footer .service .phone {\n      color: #3789d7; }\n  .footer .com-info {\n    border-top: 1px solid #949494;\n    margin-top: 20px;\n    min-height: 110px; }\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

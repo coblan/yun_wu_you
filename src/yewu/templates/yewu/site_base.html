@@ -20,6 +20,8 @@
     header_bar_menu = {{ header_bar_menu | jsonify }}
     page_menu = {{ page_menu |　jsonify }}
     crt_page_name = {{ crt_page_name | jsonify }}
+    extend_menu={{  extend_menu | jsonify }}
+    qq = {{ qq | jsonify }}
 
     crt_city = localStorage.getItem(`crt_city`) || '成都'
 
@@ -28,14 +30,9 @@
         new Vue({
             el:'#header-bar',
             data:{
-//                menu : [
-//                    {label:'首页',link:'/p/zhanxun',name:'zhanxun'},
-//                    {label:'工商注册',link:'/p/3d',name:'3d'},
-//                    {label:'VR展馆',link:'/p/vr',name:'vr'},
-//                    {label:'全景现场',link:'/p/fullscreen',name:'fullscreen'},
-//                ],
-                menu:header_bar_menu,
 
+                menu:header_bar_menu,
+                qq:qq,
                 crt_page_name:crt_page_name,
                 username:page_data.username,
                 page_menu: page_menu,
@@ -71,25 +68,6 @@
             <com-search-kuaifawu  :head="search_head" :search_args="search_args"></com-search-kuaifawu>
         </div>
 
-
-
-
-
-        <!--<div class="search-panel">-->
-        <!--<img class="search-btn" src="/static/home/12.png" alt="">-->
-        <!--<input type="text" placeholder="搜索">-->
-        <!--</div>-->
-
-        <!--<div v-if="username" style="z-index:200" class="login" >-->
-        <!--欢迎,<span v-text="username"></span>-->
-        <!--<a href="/accounts/logout">[退出]</a>-->
-        <!--</div>-->
-
-        <!--<div v-else style="z-index:200" class="login" >-->
-        <!--<a href="/accounts/login" class="login-link">登录</a>-->
-        <!--<span>&nbsp;|&nbsp;</span>-->
-        <!--<a href="/accounts/regist">注册</a>-->
-        <!--</div>-->
     </div>
 
 <div style="border-bottom: 1px solid #02c9ff;">
@@ -97,7 +75,15 @@
         <div class="flex" style="justify-content: space-between">
             <com-kuaifawu-menu label="全部服务分类" :menu_group="page_menu" ></com-kuaifawu-menu>
 
-            <com-header-menu :menu="menu" :active="crt_page_name"></com-header-menu>
+            <div class="flex">
+                <com-header-menu :menu="menu" :active="crt_page_name"></com-header-menu>
+
+                <div style="width: 160px;font-size:130%;align-self: center;color: #4f96cb;">
+                    <i class="fa fa-phone"></i>
+                    <span v-text="qq.service_phone"></span>
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -119,15 +105,61 @@
 </div>
 
 
+<script>
+
+    footer_menu={{ footer_menu | jsonify }}
+
+    $(function(){
+        new Vue({
+            el:'.footer',
+            data:{
+                footer_menu:footer_menu,
+                qq:qq,
+            }
+        })
+    })
 
 
-<div class="footer wrap" style="position: relative;background-color: #f3f3f3;height: 130px;margin-top: 20px;">
-    <div style="text-align: center;padding-top: 1em;">
-        <span>成都云无忧科技有限公司 &nbsp;&nbsp;&nbsp;&nbsp;蜀ICP备16015654号</span>
+</script>
+
+
+<div class="footer">
+
+    <div class="wrap flex links">
+        <div class="menu-panel flex-grow flex">
+            <div v-for="menu in footer_menu" class="menu-1">
+                <label v-text="menu.label"></label>
+                <ul>
+                    <li v-for="act in menu.submenu">
+                        <a :href="act.link"  v-text="act.label"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="wechat flex">
+            <img :src="qq.wechat_gzh" alt="">
+            <pre class="slogan" v-html="qq.wechat_slogan"></pre>
+
+
+        </div>
+        <div class="service">
+            <label for="">服务支持</label>
+            <h3 class="phone" v-text="qq.service_phone"></h3>
+            <span v-text="qq.service_time"></span>
+        </div>
     </div>
-    <div style="text-align: center;padding-top: 0.5em;">
-        <a>@2014-2018 Jongde Software LLC All rights reserved.</a>
+
+    <div class="com-info">
+        <div class="wrap">
+            <div style="text-align: center;padding-top: 1em;">
+                <span v-text="qq.beian_info"></span>
+            </div>
+            <div style="text-align: center;padding-top: 0.5em;">
+                <a v-text="qq.copyright"></a>
+            </div>
+        </div>
     </div>
+
 
 </div>
 

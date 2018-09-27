@@ -1,14 +1,15 @@
 require('./scss/kuaifawu_menu.scss')
 
 Vue.component('com-kuaifawu-menu',{
-    props:['label','menu_group'],
+    props:['label','menu_group','extend_menu'],
     data:function(){
         return {
-            expand:true,
+            org_expand:extend_menu,
+            expand:false,
             active_menu:{}
         }
     }, //@mouseenter="expand=true" @mouseleave="on_mouseleave()"
-    template:`<div class="kuaifawu-menu"  @mouseleave="on_mouseleave()">
+    template:`<div class="kuaifawu-menu" @mouseenter="expand=true"  @mouseleave="on_mouseleave()">
 
             <span  class="menu-button">
             <span class="action-icon"> <i class="fa fa-list-ul"></i></span>
@@ -16,7 +17,7 @@ Vue.component('com-kuaifawu-menu',{
                <span v-text="label"></span>
             </span>
 
-            <div v-show="expand" class="actions">
+            <div v-show="expand || org_expand" class="actions">
                 <com-kuaifawu-menu-item v-for="menu in menu_group" :menu="menu"
                     :class="['menu-item',{'active':active_menu.name==menu.name}]" @mouseenter.native="active_menu=menu"></com-kuaifawu-menu-item>
             </div>
@@ -37,7 +38,7 @@ Vue.component('com-kuaifawu-menu',{
     },
     methods:{
         on_mouseleave:function(){
-            //this.expand=false
+            this.expand=false
             this.active_menu={}
         }
     }

@@ -5,7 +5,7 @@
 {% block page_content %}
 <link href="https://cdn.bootcss.com/Swiper/4.3.0/css/swiper.min.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
-<script src="/static/lib/stickUp.min.js"></script>
+<!--s-->
 <script>
 
 </script>
@@ -16,6 +16,7 @@
 
     yewu={{ yewu | jsonify }}
     salers = {{ salers | jsonify }}
+    recom_saler={{ recom_saler | jsonify }}
 </script>
 
 <style>
@@ -29,10 +30,10 @@
             data:{
                 yewu:yewu,
                 salers:salers,
-                crt_soldtype:''
+                crt_soldtype:'',
+                recom_saler:recom_saler,
             },
             created:function(){
-
                 if(yewu.soldtype.length!=0){
                     this.crt_soldtype = this.yewu.soldtype[0]
                 }
@@ -132,7 +133,7 @@
             <div class="tui-saler">
                 <div class="center-vh">服务人员推介</div>
                 <div class="saler-info">
-                    <com-rich-saler :saler="salers[0]"></com-rich-saler>
+                    <com-rich-saler :saler="recom_saler"></com-rich-saler>
                 </div>
             </div>
         </div>

@@ -4,7 +4,11 @@ from helpers.director.shortcut import TablePage, ModelTable, ModelFields, page_d
 from . import js_cfg
 from . import admin_navigate
 from . import admin_recom_panel
+from . import admin_foot
+from . import admin_rich
 
+from . import admin_qq
+from . import admin_beian
 # Register your models here.
 class BannerPage(TablePage):
     template = 'jb_admin/table.html'

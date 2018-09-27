@@ -46,6 +46,11 @@ class Area(models.Model):
 class Saler(models.Model):
     """销售人员"""
     name = models.CharField('人名',max_length=30)
-    head= PictureField('头像',max_length=300)
-    phone = models.CharField('手机号码',max_length=50)
+    head= PictureField('头像',max_length=300, blank = True)
+    phone = models.CharField('手机号码',max_length=50, blank = True)
+    slogan = models.CharField('业务员口号', max_length = 500, blank = True)
+    exp = models.CharField('工作年限', max_length = 30, blank = True)
+    count = models.CharField('最近接单', max_length = 30, blank = True)
+    comment = models.CharField('好评率', max_length = 30, blank = True)
+    
     

@@ -20,12 +20,18 @@ class SalerTablePage(TablePage):
             }
             if head['name'] in width_dc:
                 head['width'] = width_dc.get(head['name'])
+
             return head
 
 class SalerForm(ModelFields):
     class Meta:
         model = Saler
         exclude = []
+    
+    def dict_head(self, head): 
+        if head['name'] == 'slogan':
+            head['editor'] = 'blocktext'
+        return head
 
 director.update({
     'saler': SalerTablePage.tableCls,

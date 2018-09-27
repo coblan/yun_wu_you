@@ -3,34 +3,85 @@ from django.views.generic.base import View
 from helpers.director.engine import BaseEngine
 from webpage.models import Banners
 from .structure import get_home_menu
-from webpage.models import MainMenu, Action, ActionGroup
+from webpage.models import MainMenu, Action, ActionGroup, RichPage
 from helpers.director.model_func.dictfy import to_dict
 from .models import Yewu, Saler
-from webpage.models import YewuRecomItem, YewuRecomPanel
+from webpage.models import YewuRecomItem, YewuRecomPanel, FooterLink
+import json
+from helpers.director.kv import get_value
+
+import random
 # Create your views here.
 class Home(View):
     def get(self,request):
         self.request = request
-        baseengine = BaseEngine()
-        baseengine.request = request
         page_data ={}
         if request.user.is_authenticated():
             page_data['username']=request.user.username
         ctx={
             'page_data':page_data,
-            'js_config':baseengine.getJsConfig()
+            'extend_menu': True,
         }
         ctx.update( self.extraCtx())
+        ctx.update(self.base_context())
         template = self.get_template()
         return render(request,template,context=ctx)   
     
+    def base_context(self): 
+        baseengine = BaseEngine()
+        baseengine.request = self.request        
+        ctx = {
+            'js_config':baseengine.getJsConfig(), 
+            'page_menu':self.get_page_menu()
+        }
+        ctx.update(self.get_header_menu())
+        ctx.update(self.footer_data())
+        ctx.update(self.get_kv_value())
+        return ctx
+    
+    def get_kv_value(self): 
+        ls = ['qq', 'wechat_gzh', 'wechat_slogan', 'service_phone', 'service_time', 'beian_info', 'copyright']
+        dc = {}
+        for k in ls:
+            dc[k] = get_value(k)
+        return {
+            'qq': dc,
+        }
+    
+    def footer_data(self): 
+        """
+        footer_menu = [
+            {'label': '关于一站到底', 'submenu': [
+                {'label': '了解我们', }, 
+                {'label': '加入我们', }, 
+                ],}
+        ]
+        """
+        footer_menu = []
+        for foot in FooterLink.objects.all():
+            links = json.loads(foot.links)
+            ls = []
+            for item in links:
+                if item.get('url'):
+                    link = item.get('url')
+                elif item.get('richpage'):
+                    link = '/rich/%s' % RichPage.objects.get(pk = item.get('richpage')).name
+                else:
+                    link = ''
+                ls.append({'link': link, 
+                           'label': item.get('label'),})
+            footer_menu.append( {'label': foot.label,'submenu': ls,} )
+            
+        return {'footer_menu': footer_menu}
+        
     def get_header_menu(self):
-        return [
+        ls = [
             {'label':'首页','link':'/p/home','name':'home'},
             {'label':'工商注册','link':'/p/3d','name':'3d'},
             {'label':'VR展馆','link':'/p/vr','name':'vr'},
             {'label':'全景现场','link':'/p/fullscreen','name':'fullscreen'},            
         ]
+        return {'header_bar_menu':ls}
     
     def get_page_menu(self):
         mainmenu_list = []
@@ -56,8 +107,6 @@ class Home(View):
             'banners': banners,
             'recomPanels': recomPanels,
             'crt_page_name':'home',
-            'header_bar_menu':self.get_header_menu(),
-            'page_menu':self.get_page_menu()
         }
 
     def get_template(self):
@@ -75,14 +124,17 @@ class YewuPage(Home):
         
         salers = [to_dict(inst) for inst in Saler.objects.all()]
         
-
         
+        random_salers = random.sample(salers, min(len(salers), 6))
+        random_saler = random.choice(salers)
         return {
             'yewu': yewu_dict,
-            'salers': salers,
+            'salers': random_salers,
+            'recom_saler': random_saler,
             'crt_page_name':'home',
             'header_bar_menu':self.get_header_menu(),
-            'page_menu':self.get_page_menu()
+            'page_menu':self.get_page_menu(), 
+            'extend_menu': False,
         }
     
     def get_template(self):
