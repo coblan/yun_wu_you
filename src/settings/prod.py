@@ -11,4 +11,4 @@ DATABASES = {
       },
     }
 
-ALLOWED_HOSTS = ['yzdd360.com']
+ALLOWED_HOSTS = ['yzdd360.com', 'yun.enjoyst.com','www.yzdd360.com']
