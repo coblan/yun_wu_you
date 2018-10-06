@@ -1,0 +1,43 @@
+$border_color: #e2e2e2;
+
+.saler-list{
+  width: 900px;
+  margin: auto;
+  min-height:600px;
+  //border:1px solid $border_color;
+  padding: 1em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+
+  .saler-panel{
+
+    .head{
+      width: 180px;
+      text-align: center;
+      img{
+        display: inline-block;
+        height: 100px;
+        width: 100px;
+        border-radius: 50px;
+      }
+    }
+    td{
+      padding-bottom: 1em;
+      padding-top:1em;
+    }
+    tr{
+        border-bottom: 1px solid $border_color;
+    }
+    .info{
+        .slogan{
+            background-color: #f4f4f4;
+            margin-top: 0.6em;
+        }
+    }
+    .contact{
+        width: 250px;
+        text-align: center;
+    }
+
+  }
+}

@@ -139,3 +139,15 @@ class YewuPage(Home):
     
     def get_template(self):
         return 'yewu/yewu.html'    
+    
+class SalerListPage(Home):
+    def extraCtx(self): 
+        salers = [to_dict(x) for x in Saler.objects.all()]
+        ctx = {
+            'extend_menu': False,
+            'salers': salers,
+        }
+        return ctx
+    
+    def get_template(self): 
+        return 'yewu/saler_list.html'

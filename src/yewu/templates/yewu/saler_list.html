@@ -1,0 +1,70 @@
+{% extends 'yewu/site_base.html' %}
+{% load static %}
+{% load jsonify %}
+
+{% block page_content %}
+<script>
+    salers = {{ salers|jsonify }}
+</script>
+<script>
+    $(function(){
+        new Vue({
+            el:'#there',
+            data:{
+                salers:salers,
+            },
+            methods:{
+                free_phone:function(){
+                    pop_layer({},'com-free-phone',function(){},{
+                        title:'免费电话咨询',
+                        area:['540px','360px']
+                    })
+                }
+            }
+        })
+    })
+</script>
+
+<div id="there" class="saler-list" style="height: 100%">
+    <div class="panel panel-default">
+        <div class="panel-heading">推介业务员列表</div>
+        <div class="panel-body">
+
+            <table class="saler-panel">
+                <tr v-for="saler in salers" >
+                    <td class="head">
+                        <img :src="saler.head" alt="">
+                    </td>
+
+                    <td class="info">
+                        <div>
+                            <h3 v-text="saler.name"></h3>
+                            <b>经验:</b>
+                            <span v-text="saler.exp"></span>
+                            &nbsp;|&nbsp;
+                            <b>好评率:</b>
+                            <span v-text="saler.comment"></span>
+                            &nbsp;|&nbsp;
+                            <b>最近接单数</b>
+                            <span v-text="saler.count"></span>
+                        </div>
+                        <div class="slogan">
+                            <span v-text="saler.slogan"></span>
+                        </div>
+                    </td>
+
+                    <td class="contact">
+                        <button type="button" class="btn btn-default btn-sm"
+                        @click="free_phone()">免费电话咨询</button>
+                    </td>
+
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

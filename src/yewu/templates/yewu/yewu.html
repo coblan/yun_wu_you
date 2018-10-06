@@ -57,6 +57,9 @@
                     $([document.documentElement, document.body]).animate({
                         scrollTop: $("#"+name).offset().top-40
                     }, 1000);
+                },
+                see_saler_list:function(){
+                    location='/saler'
                 }
             }
         })
@@ -100,7 +103,7 @@
             <div class="order-soldtype">
 
                 <div class="buy-btn-wrap">
-                    <button class="btn btn-warning">立即下单</button>
+                    <button class="btn btn-warning" @click="see_saler_list()">立即咨询</button>
                 </div>
 
             </div>

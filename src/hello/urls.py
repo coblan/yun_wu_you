@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from helpers.authuser.engin_view import AuthEngine
 from django.views.generic import RedirectView 
-from yewu.views import Home, YewuPage
+from yewu.views import Home, YewuPage, SalerListPage
 from yewu.page_rich import RichPagePort
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^pc/([\w\.]+)/?$',PcMenu.as_view(),name=PcMenu.url_name),
     url(r'^pc/?$',RedirectView.as_view(url='/pc/Business')),    
     url(r'^yewu/?$', YewuPage.as_view ()), 
+    url(r'^saler/?$', SalerListPage.as_view()), 
     url(r'^p/home/?$',Home.as_view(),), 
     url(r'^rich/([\w\.]+)/?$',RichPagePort.as_view(),), 
     url(r'^$',Home.as_view(),), 
