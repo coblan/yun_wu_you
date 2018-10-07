@@ -28,6 +28,8 @@
 
     crt_city = localStorage.getItem(`crt_city`) || '成都'
 
+    search_args = ex.parseSearch()
+
     $(function(){
 
         new Vue({
@@ -43,7 +45,7 @@
                     placeholder:'搜索所需服务，如 公司注册'
                 },
                 crt_city:crt_city,
-                search_args:{},
+                search_args:search_args,
 //                all_menu:[
 //                    {label:'注册公司',name:'zhucegongshi'},
 //                    {label:'财税记账',name:'caisuijizhang'},

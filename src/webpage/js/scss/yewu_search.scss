@@ -1,0 +1,31 @@
+$back_color: #f5f5f5;
+.yewu-search{
+    background-color: $back_color;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    min-height: 500px;
+
+    .count-title{
+      width: 800px;
+      margin: auto;
+      margin-top: 2em;
+      font-size: 120%;
+      font-weight: 600;
+    }
+    table{
+      width: 800px;
+      margin: auto;
+      border: 1px solid $back_color;
+      margin-top: 1em;
+      background-color: white;
+    }
+
+    .content{
+        width: 600px;
+        padding-left: 2em;
+    }
+    td{
+      padding-top: 2em;
+      border-bottom: 1px solid $back_color;
+    }
+}

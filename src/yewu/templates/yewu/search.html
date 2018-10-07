@@ -1,0 +1,48 @@
+{% extends 'yewu/site_base.html' %}
+{% load static %}
+{% load jsonify %}
+
+{% block page_content %}
+
+<script>
+    yewus={{ yewus | jsonify }}
+
+    $(function(){
+        new Vue({
+            el:'#there',
+            data:{
+                yewus:yewus,
+            },
+            methods:{
+                detail:function(yewu){
+                    location= ex.appendSearch('/yewu',{
+                        yewu:yewu.id,
+                        kwd:search_args.kwd
+                    })
+                }
+            }
+        })
+    })
+</script>
+
+
+<div id="there" class="yewu-search"  >
+    <div class="count-title">
+        总共查找到 <span v-text="yewus.length"></span> 项服务
+    </div>
+    <table class="wrap">
+        <tr class="item" v-for="yewu in yewus">
+            <td class="content">
+                <h3 v-text="yewu.title"></h3>
+                <div>
+                    <span v-text="yewu.sub_title"></span>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default btn-sm" @click="detail(yewu)">查看详情</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}

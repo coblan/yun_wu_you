@@ -533,7 +533,12 @@ __webpack_require__(28);
 
 Vue.component('com-search-kuaifawu', {
     props: ['search_args', 'head'],
-    template: '<div class="search-kuaifawu">\n        <input type="text" :placeholder="head.placeholder"/>\n        <span class="search-btn">\u641C\u7D22</span>\n    </div>'
+    template: '<div class="search-kuaifawu">\n        <input type="text" :placeholder="head.placeholder" v-model="search_args.kwd" @keyup.13="search()"/>\n        <span class="search-btn" @click="search()">\u641C\u7D22</span>\n    </div>',
+    methods: {
+        search: function search() {
+            location = ex.appendSearch('/yewu/search', { kwd: this.search_args.kwd });
+        }
+    }
 });
 
 /***/ }),
@@ -989,6 +994,7 @@ __webpack_require__(11);
 __webpack_require__(9);
 __webpack_require__(8);
 __webpack_require__(10);
+__webpack_require__(33);
 
 /***/ }),
 /* 30 */
@@ -1059,6 +1065,46 @@ if(false) {
 	// When the module is disposed, remove the <style> tags
 	module.hot.dispose(function() { update(); });
 }
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(34);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./yewu_search.scss", function() {
+			var newContent = require("!!../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./yewu_search.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, ".yewu-search {\n  background-color: #f5f5f5;\n  padding-top: 1em;\n  padding-bottom: 2em;\n  min-height: 500px; }\n  .yewu-search .count-title {\n    width: 800px;\n    margin: auto;\n    margin-top: 2em;\n    font-size: 120%;\n    font-weight: 600; }\n  .yewu-search table {\n    width: 800px;\n    margin: auto;\n    border: 1px solid #f5f5f5;\n    margin-top: 1em;\n    background-color: white; }\n  .yewu-search .content {\n    width: 600px;\n    padding-left: 2em; }\n  .yewu-search td {\n    padding-top: 2em;\n    border-bottom: 1px solid #f5f5f5; }\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

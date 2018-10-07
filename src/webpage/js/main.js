@@ -10,4 +10,5 @@ require('./scss/yewu.scss')
 require('./scss/home.scss')
 require('./scss/foot.scss')
 require('./scss/saler_list.scss')
+require('./scss/yewu_search.scss')
 
