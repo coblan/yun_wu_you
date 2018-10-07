@@ -10,11 +10,12 @@ Vue.component('com-big-city-select',{
             contain_show:false,
         }
     },
-    template:`<div style="height: 2em;display: inline-block">
+    template:`<div style="height: 15px;display: inline-block">
     <div class="place-input" @mouseenter="contain_show=true" @mouseleave="contain_show=false">
         <div class="input">
             <span><i class="fa fa-map-marker"></i></span>
             <span v-text="value"></span>
+            <span>[切换城市]</span>
         </div>
 
         <ul v-show="contain_show" class="item-contain">

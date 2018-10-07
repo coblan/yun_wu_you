@@ -1,7 +1,7 @@
 
 .recomPanels{
   padding: 1em;
-
+  background-color: #e5e5e5;
 
   &>.title{
       color: #52d8ff;
@@ -12,6 +12,6 @@
       color: grey;
   }
   .item-wrap{
-      padding: 1em;
+      padding: 1em 5em;
   }
 }

@@ -387,7 +387,7 @@ Object.defineProperty(exports, "__esModule", {
 var baseInput = exports.baseInput = {
     linetext: {
         props: ['row', 'head'],
-        template: '<div>\n            \t\t\t<span v-if=\'head.readonly\' v-text=\'row[head.name]\'></span>\n            \t\t\t<input v-else type="text" class="form-control input-sm" v-model="row[head.name]"\n            \t\t \t    :id="\'id_\'+head.name" :name="head.name"\n                        \t:placeholder="head.placeholder" :autofocus="head.autofocus" :maxlength=\'head.maxlength\'>\n                       </div>'
+        template: '<div :style="head.style">\n            \t\t\t<span v-if=\'head.readonly\' v-text=\'row[head.name]\'></span>\n            \t\t\t<input v-else type="text" class="form-control input-sm" v-model="row[head.name]"\n            \t\t \t    :id="\'id_\'+head.name" :name="head.name"\n                        \t:placeholder="head.placeholder" :autofocus="head.autofocus" :maxlength=\'head.maxlength\'>\n                       </div>'
     },
     number: {
         props: ['row', 'head'],
@@ -637,7 +637,7 @@ var baseInput = exports.baseInput = {
     },
     richtext: {
         props: ['row', 'head'],
-        template: '<div style="position: relative">\n            <span v-if=\'head.readonly\' v-text=\'row[head.name]\'></span>\n            <div v-else>\n                <input type="text" :name=\'head.name\' style="display:none" v-model="row[head.name]">\n                <ckeditor ref="ck" :style="head.style" v-model="row[head.name]" :id="\'id_\'+head.name" :config="head.config"></ckeditor>\n            </div>\n\n                       </div>',
+        template: '<div style="position: relative">\n            <span v-if=\'head.readonly\' v-text=\'row[head.name]\'></span>\n            <div v-else>\n                <input type="text" :name=\'head.name\' style="display:none" v-model="row[head.name]">\n                <ckeditor ref="ck" :style="head.style" v-model="row[head.name]" :id="\'id_\'+head.name" :set="head.set" :config="head.config"></ckeditor>\n            </div>\n\n                       </div>',
         methods: {
             commit: function commit() {
                 Vue.set(this.row, this.head.name, this.$refs.ck.editor.getData());
@@ -1123,7 +1123,7 @@ var ck_complex = {
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
-	toolbarGroups: [{ name: 'clipboard', groups: ['clipboard', 'undo'] }, { name: 'editing', groups: ['find', 'selection', 'spellchecker'] }, { name: 'links' }, { name: 'insert' }, { name: 'forms' }, { name: 'tools' }, { name: 'document', groups: ['mode', 'document', 'doctools'] }, { name: 'others' }, '/', { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] }, { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'] }, { name: 'styles' }, { name: 'font' }, { name: 'colors' }, { name: 'about' }],
+	toolbarGroups: [{ name: 'tools' }, { name: 'clipboard', groups: ['clipboard', 'undo'] }, { name: 'editing', groups: ['find', 'selection', 'spellchecker'] }, { name: 'links' }, { name: 'insert' }, { name: 'forms' }, { name: 'document', groups: ['mode', 'document', 'doctools'] }, { name: 'others' }, '/', { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] }, { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'] }, { name: 'styles' }, { name: 'font' }, { name: 'colors' }, { name: 'about' }],
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
@@ -1137,7 +1137,7 @@ var ck_complex = {
 	image_previewText: 'image preview',
 	imageUploadUrl: '/d/ckeditor_image', // '/_face/ckeditor_upload_image',
 	filebrowserImageUploadUrl: '/d/ckeditor_image', // '/_face/ckeditor_upload_image', // Will be replace by imageUploadUrl when upload_image
-	extraPlugins: 'justify,codesnippet,lineutils,mathjax,colorbutton,uploadimage,font,autogrow', //autogrow,
+	extraPlugins: 'justify,codesnippet,lineutils,mathjax,colorbutton,uploadimage,font,autogrow,html5video,widget,widgetselection,clipboard,lineutils', //autogrow,
 	mathJaxLib: 'https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS_HTML',
 	extraAllowedContent: 'img[class]',
 	autoGrow_maxHeight: 600,
@@ -1230,11 +1230,30 @@ var ckeditor = {
 	//		this.model=this.editor.getData()
 	//	}
 	//}
-};
 
-Vue.component('ckeditor', function (resolve, reject) {
-	ex.load_js('https://cdn.bootcss.com/ckeditor/4.6.2/ckeditor.js', function () {
+	//<script src="//cdn.ckeditor.com/4.10.1/full/ckeditor.js"></script>
+};Vue.component('ckeditor', function (resolve, reject) {
+	//ex.load_js('https://cdn.bootcss.com/ckeditor/4.6.2/ckeditor.js',function(){
+	//ex.load_js('http://cdn.ckeditor.com/4.10.1/full/ckeditor.js',function(){
+	//ex.load_js('/static/ckeditor_4.10.1/ckeditor/ckeditor.js',function(){
+	ex.load_js(cfg.js_lib.ckeditor, function () {
 		resolve(ckeditor);
+
+		//CKEDITOR.plugins.setLang( 'html5video', 'zh-cn', {
+		//	button: '插入HTML5视频',
+		//	title: 'HTML5 视频',
+		//	infoLabel: '视频信息',
+		//	allowed: '允许上传格式: MP4, WebM, Ogv',
+		//	urlMissing: '视频源地址丢失',
+		//	videoProperties: '视频属性',
+		//	upload: '上传',
+		//	btnUpload: '上传到服务器',
+		//	advanced: '高级',
+		//	autoplay: '自动播放?',
+		//	yes: '是',
+		//	no: '否',
+		//	responsive: '响应式宽度'
+		//} );
 	});
 });
 
@@ -1260,12 +1279,14 @@ var edit_level = {
 	format_tags: 'p;h1;h2;h3;pre',
 
 	// Simplify the dialog windows.
+	//plugins : 'wysiwygarea,toolbar,basicstyles,...',
 	removeDialogTabs: 'image:advanced;link:advanced',
 	image_previewText: 'image preview',
 	imageUploadUrl: '/d/ckeditor_image', // '/_face/ckeditor_upload_image',
 	filebrowserImageUploadUrl: '/d/ckeditor_image', // '/_face/ckeditor_upload_image', // Will be replace by imageUploadUrl when upload_image
-	extraPlugins: 'justify,lineutils,colorbutton,uploadimage,font,autogrow', //,mathjax,codesnippet
-	//mathJaxLib : '//cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS_HTML',
+	//extraPlugins : 'justify,lineutils,colorbutton,uploadimage,font,autogrow', //,mathjax,codesnippet
+	removePlugins: 'html5video,forms,flash,a11yhelp,scayt,wsc,language,preview,print,save,saveall,template,newpage,templates',
+	mathJaxLib: '//cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS_HTML',
 	extraAllowedContent: 'img[class]',
 	autoGrow_maxHeight: 600,
 	autoGrow_minHeight: 200,
@@ -3570,42 +3591,77 @@ function compare(temp1, temp2) {
 
 var com_date_datetimefield_range = {
     props: ['head', 'search_args'],
-    data: function data() {
-        if (!this.search_args['_start_' + this.head.name]) {
-            Vue.set(this.search_args, '_start_' + this.head.name, '');
-            var start = '';
-        } else {
-            var start = this.search_args['_start_' + this.head.name].slice(0, 10);
-        }
-        if (!this.search_args['_end_' + this.head.name]) {
-            Vue.set(this.search_args, '_end_' + this.head.name, '');
-            var end = '';
-        } else {
-            var end = this.search_args['_end_' + this.head.name].slice(0, 10);
-        }
-        return {
-            start: start,
-            end: end
-        };
-    },
+    //data:function(){
+    //    if(! this.search_args['_start_'+this.head.name]){
+    //        Vue.set(this.search_args,'_start_'+this.head.name,'')
+    //        var start=''
+    //    }else{
+    //        var start=this.search_args['_start_'+this.head.name].slice(0,10)
+    //    }
+    //    if(! this.search_args['_end_'+this.head.name]){
+    //        Vue.set(this.search_args,'_end_'+this.head.name,'')
+    //        var end=''
+    //    }else{
+    //        var end=this.search_args['_end_'+this.head.name].slice(0,10)
+    //    }
+    //    return {
+    //        start:start,
+    //        end:end
+    //    }
+    //},
     template: '<div  class="date-filter flex flex-ac">\n                     <date v-model="start" :placeholder="head.label"></date>\n                    <div style="display: inline-block;margin: 0 2px;" >-</div>\n                        <date  v-model="end" :placeholder="head.label"></date>\n                </div>',
-    watch: {
-        start: function start(nv) {
-            if (nv) {
-                this.search_args['_start_' + this.head.name] = nv + ' 00:00:00';
-            } else {
-                this.search_args['_start_' + this.head.name] = '';
+
+    computed: {
+        start: {
+            get: function get() {
+                if (this.search_args['_start_' + this.head.name]) {
+                    return this.search_args['_start_' + this.head.name].slice(0, 10);
+                } else {
+                    return '';
+                }
+            },
+            set: function set(nv) {
+                if (nv) {
+                    this.search_args['_start_' + this.head.name] = nv + ' 00:00:00';
+                } else {
+                    this.search_args['_start_' + this.head.name] = nv;
+                }
             }
         },
-        end: function end(nv) {
-            if (nv) {
-                this.search_args['_end_' + this.head.name] = nv + ' 23:59:59';
-            } else {
-                this.search_args['_end_' + this.head.name] = '';
+        end: {
+            get: function get() {
+                if (this.search_args['_end_' + this.head.name]) {
+                    return this.search_args['_end_' + this.head.name].slice(0, 10);
+                } else {
+                    return '';
+                }
+            },
+            set: function set(nv) {
+                if (nv) {
+                    this.search_args['_end_' + this.head.name] = nv + ' 23:59:59';
+                } else {
+                    this.search_args['_end_' + this.head.name] = nv;
+                }
             }
         }
-
     }
+    //watch:{
+    //    start:function(nv){
+    //        if(nv){
+    //            this.search_args['_start_'+this.head.name]=nv+' 00:00:00'
+    //        }else{
+    //            this.search_args['_start_'+this.head.name]=''
+    //        }
+    //    },
+    //    end:function(nv){
+    //        if(nv){
+    //            this.search_args['_end_'+this.head.name]=nv+' 23:59:59'
+    //        }else{
+    //            this.search_args['_end_'+this.head.name]=''
+    //        }
+    //    }
+    //
+    //}
 
 };
 Vue.component('com-date-datetimefield-range-filter', com_date_datetimefield_range);
@@ -4354,7 +4410,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, "table.fake-suit {\n  border: 1px solid #DDD;\n  border-radius: 6px; }\n  table.fake-suit th {\n    font-weight: bold;\n    background-color: #e5e5e5;\n    background-image: linear-gradient(to bottom, #f3f3f3, #e5e5e5); }\n  table.fake-suit td {\n    border-left: 1px solid #F5F5F5; }\n  table.fake-suit tr > td:first-child {\n    border-left: none; }\n  table.fake-suit tbody tr {\n    background-color: white; }\n  table.fake-suit tbody td {\n    border-top: 1px solid #E7E7E7;\n    padding-top: 3px;\n    padding-bottom: 3px; }\n  table.fake-suit tbody tr:nth-child(even) {\n    background-color: #FAFAFA; }\n  table.fake-suit tbody tr:hover {\n    background-color: #F5F5F5; }\n\n.paginator input {\n  width: 20px; }\n\n.paginator .page-input-block {\n  display: inline-block; }\n\n.paginator button {\n  vertical-align: top; }\n\n.sort-mark img {\n  width: 10px; }\n\nul.pagination li {\n  display: inline;\n  cursor: pointer; }\n\nul.pagination li span {\n  color: black;\n  float: left;\n  padding: 4px 10px;\n  text-decoration: none;\n  border: 1px solid #ddd; }\n\nul.pagination li span.active {\n  background-color: #4CAF50;\n  color: white; }\n\nul.pagination li span:hover:not(.active) {\n  background-color: #ddd; }\n\n.com-filter .date-filter {\n  padding-left: 10px; }\n  .com-filter .date-filter span {\n    padding-left: 5px; }\n  .com-filter .date-filter .datetime-picker {\n    min-width: 10em;\n    max-width: 14em; }\n\n.sortmark {\n  color: #d9d9de; }\n  .sortmark.sort-col {\n    color: black; }\n", ""]);
+exports.push([module.i, "table.fake-suit {\n  border: 1px solid #DDD;\n  border-radius: 6px; }\n  table.fake-suit th {\n    font-weight: bold;\n    background-color: #e5e5e5;\n    background-image: linear-gradient(to bottom, #f3f3f3, #e5e5e5); }\n  table.fake-suit td {\n    border-left: 1px solid #F5F5F5; }\n  table.fake-suit tr > td:first-child {\n    border-left: none; }\n  table.fake-suit tbody tr {\n    background-color: white; }\n  table.fake-suit tbody td {\n    border-top: 1px solid #E7E7E7;\n    padding-top: 3px;\n    padding-bottom: 3px; }\n  table.fake-suit tbody tr:nth-child(even) {\n    background-color: #FAFAFA; }\n  table.fake-suit tbody tr:hover {\n    background-color: #F5F5F5; }\n\n.paginator input {\n  width: 20px; }\n\n.paginator .page-input-block {\n  display: inline-block; }\n\n.paginator button {\n  vertical-align: top; }\n\n.sort-mark img {\n  width: 10px; }\n\nul.pagination li {\n  display: inline;\n  cursor: pointer; }\n\nul.pagination li span {\n  color: black;\n  float: left;\n  padding: 4px 10px;\n  text-decoration: none;\n  border: 1px solid #ddd; }\n\nul.pagination li span.active {\n  background-color: #4CAF50;\n  color: white; }\n\nul.pagination li span:hover:not(.active) {\n  background-color: #ddd; }\n\n.com-filter .date-filter {\n  /*padding-left: 10px;*/ }\n  .com-filter .date-filter span {\n    padding-left: 5px; }\n  .com-filter .date-filter .datetime-picker {\n    min-width: 10em;\n    max-width: 14em; }\n\n.sortmark {\n  color: #d9d9de; }\n  .sortmark.sort-col {\n    color: black; }\n", ""]);
 
 // exports
 
@@ -4382,7 +4438,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".filter-item {\n  margin-right: 0.5em; }\n\n.com-filter {\n  align-items: flex-start;\n  flex-wrap: wrap; }\n\n.row-filter .bootstrap-select {\n  min-width: 10em; }\n", ""]);
+exports.push([module.i, ".filter-item {\n  margin: auto 0.3em;\n  max-width: 300px; }\n\n.com-filter {\n  align-items: flex-start;\n  flex-wrap: wrap; }\n\n.row-filter .bootstrap-select {\n  min-width: 10em; }\n", ""]);
 
 // exports
 

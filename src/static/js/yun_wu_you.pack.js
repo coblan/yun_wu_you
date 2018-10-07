@@ -394,7 +394,7 @@ Vue.component('com-big-city-select', {
             contain_show: false
         };
     },
-    template: '<div style="height: 2em;display: inline-block">\n    <div class="place-input" @mouseenter="contain_show=true" @mouseleave="contain_show=false">\n        <div class="input">\n            <span><i class="fa fa-map-marker"></i></span>\n            <span v-text="value"></span>\n        </div>\n\n        <ul v-show="contain_show" class="item-contain">\n            <li class="item" @click="set_value(city)" v-for="city in citys" v-text="city"></li>\n        </ul>\n    </div>\n    </div>',
+    template: '<div style="height: 15px;display: inline-block">\n    <div class="place-input" @mouseenter="contain_show=true" @mouseleave="contain_show=false">\n        <div class="input">\n            <span><i class="fa fa-map-marker"></i></span>\n            <span v-text="value"></span>\n            <span>[\u5207\u6362\u57CE\u5E02]</span>\n        </div>\n\n        <ul v-show="contain_show" class="item-contain">\n            <li class="item" @click="set_value(city)" v-for="city in citys" v-text="city"></li>\n        </ul>\n    </div>\n    </div>',
     methods: {
         set_value: function set_value(city) {
             this.$emit('input', city);
@@ -418,7 +418,17 @@ __webpack_require__(24);
 
 Vue.component('com-plain-saler', {
     props: ['saler'],
-    template: '<div class="com-plain-saler flex">\n    <div class="inn-wrap">\n        <img :src="saler.head" alt="">\n        <div class="panel">\n             <label v-text="saler.name"></label>\n             <div class="info">\n              <span>\u5DE5\u4F5C\u7ECF\u9A8C\uFF1A</span><span v-text="saler.exp"></span>&nbsp;&nbsp; |&nbsp;&nbsp;\n              <span>\u597D\u8BC4\u7387\uFF1A</span><span v-text="saler.comment"></span>\n             </div>\n\n             <div class="free-phone">\n                <button class="btn btn-default btn-sm">\u514D\u8D39\u7535\u8BDD\u54A8\u8BE2</button>\n             </div>\n\n        </div>\n    </div>\n\n\n    </div>'
+    template: '<div class="com-plain-saler flex">\n    <div class="inn-wrap">\n        <img :src="saler.head" alt="">\n        <div class="panel">\n             <label v-text="saler.name"></label>\n             <div class="info">\n              <span>\u5DE5\u4F5C\u7ECF\u9A8C\uFF1A</span><span v-text="saler.exp"></span>&nbsp;&nbsp; |&nbsp;&nbsp;\n              <span>\u597D\u8BC4\u7387\uFF1A</span><span v-text="saler.comment"></span>\n             </div>\n\n             <div class="free-phone">\n                <button class="btn btn-default btn-sm" @click="free_phone()">\u514D\u8D39\u7535\u8BDD\u54A8\u8BE2</button>\n             </div>\n\n        </div>\n    </div>\n    </div>',
+    methods: {
+        free_phone: function free_phone() {
+            var win = pop_layer({}, 'com-free-phone', function () {
+                layer.close(win);
+            }, {
+                title: '免费电话咨询',
+                area: ['540px', '360px']
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -711,7 +721,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".recomPanels {\n  padding: 1em; }\n  .recomPanels > .title {\n    color: #52d8ff;\n    display: inline-block;\n    margin-right: 1em; }\n  .recomPanels > .sub-title {\n    color: grey; }\n  .recomPanels .item-wrap {\n    padding: 1em; }\n", ""]);
+exports.push([module.i, ".recomPanels {\n  padding: 1em;\n  background-color: #e5e5e5; }\n  .recomPanels > .title {\n    color: #52d8ff;\n    display: inline-block;\n    margin-right: 1em; }\n  .recomPanels > .sub-title {\n    color: grey; }\n  .recomPanels .item-wrap {\n    padding: 1em 5em; }\n", ""]);
 
 // exports
 
@@ -739,7 +749,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".saler-list {\n  width: 900px;\n  margin: auto;\n  min-height: 600px;\n  padding: 1em;\n  margin-top: 2em;\n  margin-bottom: 2em; }\n  .saler-list .saler-panel .head {\n    width: 180px;\n    text-align: center; }\n    .saler-list .saler-panel .head img {\n      display: inline-block;\n      height: 100px;\n      width: 100px;\n      border-radius: 50px; }\n  .saler-list .saler-panel td {\n    padding-bottom: 1em;\n    padding-top: 1em; }\n  .saler-list .saler-panel tr {\n    border-bottom: 1px solid #e2e2e2; }\n  .saler-list .saler-panel .info .slogan {\n    background-color: #f4f4f4;\n    margin-top: 0.6em; }\n  .saler-list .saler-panel .contact {\n    width: 250px;\n    text-align: center; }\n", ""]);
+exports.push([module.i, ".saler-list {\n  width: 900px;\n  margin: auto;\n  min-height: 600px;\n  padding: 1em;\n  margin-top: 2em;\n  margin-bottom: 2em; }\n  .saler-list .saler-panel {\n    margin: auto; }\n    .saler-list .saler-panel .head {\n      width: 180px;\n      text-align: center; }\n      .saler-list .saler-panel .head img {\n        display: inline-block;\n        height: 100px;\n        width: 100px;\n        border-radius: 50px; }\n    .saler-list .saler-panel td {\n      padding-bottom: 1em;\n      padding-top: 1em; }\n    .saler-list .saler-panel tr {\n      border-bottom: 1px solid #e2e2e2; }\n    .saler-list .saler-panel .info .slogan {\n      background-color: #f4f4f4;\n      margin-top: 0.6em; }\n    .saler-list .saler-panel .contact {\n      width: 250px;\n      text-align: center; }\n", ""]);
 
 // exports
 
@@ -980,7 +990,24 @@ __webpack_require__(10);
 __webpack_require__(32);
 
 Vue.component('com-free-phone', {
-    template: '<div class="free-phone">\n    <el-steps :active="1" align-center>\n          <el-step title="\u8F93\u5165\u624B\u673A\u53F7" ></el-step>\n          <el-step title="\u60A8\u63A5\u542C\u6765\u7535" ></el-step>\n          <el-step title="\u88AB\u53EB\u65B9\u63A5\u542C" ></el-step>\n          <el-step title="\u54A8\u8BE2\u7ED3\u675F"></el-step>\n    </el-steps>\n        <div class="phone-row" >\n             <input class="form-control" type="text" placeholder="\u624B\u673A\u53F7\u7801">\n              <button type="button" class="btn btn-success btn-sm">\u5F00\u59CB\u514D\u8D39\u54A8\u8BE2</button>\n        </div>\n        <div style="text-align: center;width: 430px;margin: auto;margin-top: 3em;">\n          <span>\u672C\u6B21\u7535\u8BDD\u54A8\u8BE2\u5B8C\u5168\u514D\u8D39\uFF0C\u6211\u4EEC\u5C06\u5BF9\u60A8\u7684\u53F7\u7801\u4E25\u683C\u4FDD\u5BC6\uFF0C\u8BF7\u653E\u5FC3\u4F7F\u7528</span>\n        </div>\n\n    </div>'
+    data: function data() {
+        return {
+            heads: [{ name: 'phone', editor: 'linetext', label: '手机号', fv_rule: 'mobile' }],
+            row: {
+                _director_name: 'freephone.edit'
+            }
+        };
+    },
+    template: '<div class="free-phone">\n    <el-steps :active="1" align-center>\n          <el-step title="\u8F93\u5165\u624B\u673A\u53F7" ></el-step>\n          <el-step title="\u60A8\u63A5\u542C\u6765\u7535" ></el-step>\n          <el-step title="\u88AB\u53EB\u65B9\u63A5\u542C" ></el-step>\n          <el-step title="\u54A8\u8BE2\u7ED3\u675F"></el-step>\n    </el-steps>\n\n        <com-sim-fields class="no-label msg-bottom phone-row" ok-btn="\u5F00\u59CB\u514D\u8D39\u54A8\u8BE2"\n        :heads="heads" :row="row"\n        @after-save="after_save()"></com-sim-fields>\n             <!--<input class="form-control" type="text" placeholder="\u624B\u673A\u53F7\u7801">-->\n              <!--<button type="button" class="btn btn-success btn-sm">\u5F00\u59CB\u514D\u8D39\u54A8\u8BE2</button>-->\n\n        <div style="text-align: center;width: 430px;margin: auto;margin-top: 3em;">\n          <span>\u672C\u6B21\u7535\u8BDD\u54A8\u8BE2\u5B8C\u5168\u514D\u8D39\uFF0C\u6211\u4EEC\u5C06\u5BF9\u60A8\u7684\u53F7\u7801\u4E25\u683C\u4FDD\u5BC6\uFF0C\u8BF7\u653E\u5FC3\u4F7F\u7528</span>\n        </div>\n\n    </div>',
+    methods: {
+        after_save: function after_save(row) {
+            var self = this;
+            layer.alert('您的号码已经提交，稍后我们会与您取得联系。', function (index) {
+                self.$emit('finish');
+                layer.close(index);
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -992,7 +1019,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".free-phone {\n  margin: 2em; }\n  .free-phone .phone-row {\n    width: 240px;\n    margin: auto;\n    margin-top: 3em; }\n    .free-phone .phone-row .btn {\n      width: 100%;\n      margin-top: 1em; }\n", ""]);
+exports.push([module.i, ".free-phone {\n  margin: 2em; }\n  .free-phone .phone-row {\n    width: 240px;\n    margin: auto;\n    margin-top: 3em; }\n    .free-phone .phone-row .field-input {\n      width: 100%; }\n", ""]);
 
 // exports
 

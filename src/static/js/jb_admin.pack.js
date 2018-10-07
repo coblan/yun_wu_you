@@ -1394,16 +1394,20 @@ var com_sim_fields = {
     },
     components: window._baseInput,
     mixins: [mix_fields_data, mix_nice_validator],
-    template: ' <div class="field-panel sim-fields" style="text-align:center;">\n                <!--<com-table-fields :heads="heads" :row="row">-->\n                    <!--<slot>-->\n                    <!--<tr>-->\n                        <!--<td colspan="2">-->\n                            <!--<div class="submit-block">-->\n                                <!--<button @click="panel_submit" type="btn"-->\n                                    <!--:class="[\'btn\',btnCls]"><span v-text="okBtn"></span></button>-->\n                            <!--</div>-->\n                         <!--</td>-->\n                    <!--</tr>-->\n                    <!--</slot>-->\n           <!--</com-table-fields>-->\n\n           <table class="table-fields">\n        <tr v-for="head in heads">\n            <td class="field-label-td"  valign="top">\n            <div class="field-label" style="position: relative">\n                <span v-text="head.label"></span>\n                <span class="req_star" v-if=\'head.required\'>*</span>\n            </div>\n\n            </td>\n            <td class="field-input-td" >\n            <div class="field-input">\n                <component v-if="head.editor" :is="head.editor"\n                     @field-event="$emit(\'field-event\',$event)"\n                     :head="head" :row="row"></component>\n                <span v-if="head.help_text" class="help-text clickable">\n                    <i style="color: #3780af;position: relative;top:10px;"   @click="show_msg(head.help_text,$event)" class="fa fa-question-circle" ></i>\n                </span>\n            </div>\n\n            </td>\n        </tr>\n\n           <tr>\n           <td></td>\n                <td colspan="1">\n                    <div class="submit-block">\n                        <button @click="panel_submit" type="btn"\n                            :class="[\'btn\',btnCls]"><span v-text="okBtn"></span></button>\n                    </div>\n                 </td>\n           </tr>\n    </table>\n\n\n        </div>',
+    template: ' <div class="field-panel sim-fields" style="text-align:center;">\n                <!--<com-table-fields :heads="heads" :row="row">-->\n                    <!--<slot>-->\n                    <!--<tr>-->\n                        <!--<td colspan="2">-->\n                            <!--<div class="submit-block">-->\n                                <!--<button @click="panel_submit" type="btn"-->\n                                    <!--:class="[\'btn\',btnCls]"><span v-text="okBtn"></span></button>-->\n                            <!--</div>-->\n                         <!--</td>-->\n                    <!--</tr>-->\n                    <!--</slot>-->\n           <!--</com-table-fields>-->\n\n           <table class="table-fields">\n        <tr v-for="head in heads">\n            <td class="field-label-td"  valign="top">\n            <div class="field-label" style="position: relative">\n                <span v-text="head.label"></span>\n                <span class="req_star" v-if=\'head.required\'>*</span>\n            </div>\n\n            </td>\n            <td class="field-input-td" >\n            <div class="field-input">\n                <component v-if="head.editor" :is="head.editor"\n                     @field-event="$emit(\'field-event\',$event)"\n                     :head="head" :row="row"></component>\n                <span v-if="head.help_text" class="help-text clickable">\n                    <i style="color: #3780af;position: relative;top:10px;"   @click="show_msg(head.help_text,$event)" class="fa fa-question-circle" ></i>\n                </span>\n            </div>\n\n            </td>\n        </tr>\n\n           <tr>\n           <td class="field-label-td"></td>\n                <td colspan="1">\n                    <div class="submit-block">\n                        <button @click="submit" type="btn"\n                            :class="[\'btn\',btnCls]"><span v-text="okBtn"></span></button>\n                    </div>\n                 </td>\n           </tr>\n    </table>\n\n\n        </div>',
     methods: {
-        panel_submit: function panel_submit() {
-            if (this.isValid()) {
-                this.$emit('submit');
-            }
-        },
+        //panel_submit:function(){
+        //    if(this.isValid()){
+        //        this.$emit('submit')
+        //    }
+        //},
         show_msg: function show_msg(msg, event) {
             layer.tips(msg, event.target);
+        },
+        after_save: function after_save(row) {
+            this.$emit('after-save', row);
         }
+
     }
 };
 
@@ -1588,7 +1592,11 @@ function pop_layer(com_ctx, component_name, callback, layerConfig) {
         resize: true,
         resizing: function resizing(layero) {
             var total_height = $('#fields-pop-' + pop_id).parents('.layui-layer').height();
-            $('#fields-pop-' + pop_id).parents('.layui-layer-content').height(total_height - 42);
+            if (this.title) {
+                $('#fields-pop-' + pop_id).parents('.layui-layer-content').height(total_height - 42);
+            } else {
+                $('#fields-pop-' + pop_id).parents('.layui-layer-content').height(total_height);
+            }
         },
         //shadeClose: true, //点击遮罩关闭
         content: '<div id="fields-pop-' + pop_id + '">\n                    <component :is="component_name" :com_ctx="com_ctx" @finish="on_finish($event)"></component>\n                </div>',
@@ -1895,6 +1903,7 @@ var mix_fields_data = {
                     self.showErrors(rt.errors);
                 } else {
                     cfg.hide_load(2000);
+                    ex.vueAssign(self.row, rt.row);
                     self.after_save(rt.row);
                     self.setErrors({});
                 }
@@ -1917,7 +1926,7 @@ var mix_fields_data = {
         //},
         afterSave: function afterSave(resp) {},
         after_save: function after_save(new_row) {
-            ex.assign(this.row, new_row);
+            //ex.assign(this.row,new_row)
         },
         showErrors: function showErrors(errors) {
             // 落到 nice validator去
@@ -2040,7 +2049,9 @@ var mix_table_data = {
     data: function data() {
         return {
             op_funs: {},
-            changed_rows: []
+            changed_rows: [],
+
+            table_layout: {}
         };
     },
     mounted: function mounted() {
@@ -2350,9 +2361,11 @@ var mix_table_data = {
 
                 self.rows = resp.get_rows.rows;
                 self.row_pages = resp.get_rows.row_pages;
-                self.search_args = resp.get_rows.search_args;
+                //self.search_args=resp.get_rows.search_args
+                ex.vueAssign(self.search_args, resp.get_rows.search_args);
                 self.footer = resp.get_rows.footer;
                 self.parents = resp.get_rows.parents;
+                self.table_layout = resp.get_rows.table_layout;
                 cfg.hide_load();
             });
         },
@@ -3746,7 +3759,7 @@ Vue.component('com-table-select', select);
 
 var switch_to_tab = {
     props: ['rowData', 'field', 'index'],
-    template: '<span v-text="rowData[field]" @click="goto_tab()" class="clickable"></span>',
+    template: '<span @click="goto_tab()" class="clickable">\n     <component v-if="head.inn_editor" :is="head.inn_editor" :rowData="rowData" :field="field" :index="index"></component>\n    <span v-else v-text="rowData[field]"></span>\n    </span>',
     created: function created() {
         // find head from parent table
         var table_par = this.$parent;
@@ -3764,9 +3777,20 @@ var switch_to_tab = {
     },
     methods: {
         goto_tab: function goto_tab() {
-            this.$emit('on-custom-comp', { name: 'switch_to_tab',
+            //this.$emit('on-custom-comp',
+            //    {
+            //        name:'switch_to_tab',
+            //        tab_name:this.head.tab_name,
+            //        named_tabs:this.head.named_tabs,
+            //        row:this.rowData
+            //    }
+            //)
+            eventBus.$emit('switch_to_tab', {
+                name: 'switch_to_tab',
                 tab_name: this.head.tab_name,
-                row: this.rowData });
+                named_tabs: this.head.named_tabs,
+                row: this.rowData
+            });
         }
     }
 };
@@ -4163,7 +4187,7 @@ var ajax_table = {
             ops: heads_ctx.ops || [],
             rows: [],
             row_pages: {},
-            //search_tip:this.kw.search_tip,
+            selectable: heads_ctx.selectable || true,
 
             selected: [],
             del_info: [],
@@ -4179,7 +4203,7 @@ var ajax_table = {
     //        this.get_data()
     //    }
     //},
-    template: '<div class="rows-block flex-v" style="position: absolute;top:0;left:0;bottom: 0;right:0;overflow: auto;padding-bottom: 3em;" >\n        <div class=\'flex\' style="min-height: 3em;" v-if="row_filters.length > 0">\n            <com-filter class="flex" :heads="row_filters" :search_args="search_args"\n                        @submit="search()"></com-filter>\n            <div class="flex-grow"></div>\n        </div>\n\n        <div  v-if="ops.length>0">\n            <div class="oprations" style="padding: 5px">\n                <component v-for="op in ops"\n                           :is="op.editor"\n                           :ref="\'op_\'+op.name"\n                           :head="op"\n                           :disabled="get_attr(op.disabled)"\n                           v-show="! get_attr(op.hide)"\n                           @operation="on_operation(op)"></component>\n            </div>\n        </div>\n\n        <div class="box box-success flex-grow">\n            <div class="table-wraper" style="position: absolute;top:0;left:0;bottom: 0;right:0;">\n               <el-table class="table" ref="e_table"\n                              :data="rows"\n                              border\n                              show-summary\n                              :fit="false"\n                              :stripe="true"\n                              size="mini"\n                              @sort-change="sortChange($event)"\n                              @selection-change="handleSelectionChange"\n                              :summary-method="getSum"\n                              height="100%"\n                              style="width: 100%">\n                        <el-table-column\n                                type="selection"\n                                width="55">\n                        </el-table-column>\n\n                        <template  v-for="head in heads">\n\n                            <el-table-column v-if="head.editor"\n                                             :show-overflow-tooltip="is_show_tooltip(head) "\n                                             :label="head.label"\n                                             :sortable="is_sort(head)"\n                                             :width="head.width">\n                                <template slot-scope="scope">\n                                    <component :is="head.editor"\n                                               @on-custom-comp="on_td_event($event)"\n                                               :row-data="scope.row" :field="head.name" :index="scope.$index">\n                                    </component>\n\n                                </template>\n\n                            </el-table-column>\n\n                            <el-table-column v-else\n                                             :show-overflow-tooltip="is_show_tooltip(head) "\n                                             :prop="head.name"\n                                             :label="head.label"\n                                             :sortable="is_sort(head)"\n                                             :width="head.width">\n                            </el-table-column>\n\n                        </template>\n\n                    </el-table>\n            </div>\n\n        </div>\n          <div>\n                    <el-pagination\n                        @size-change="on_perpage_change"\n                        @current-change="get_page"\n                        :current-page="row_pages.crt_page"\n                        :page-sizes="[20, 50, 100, 500]"\n                        :page-size="row_pages.perpage"\n                        layout="total, sizes, prev, pager, next, jumper"\n                        :total="row_pages.total">\n                </el-pagination>\n            </div>\n    </div>',
+    template: '<div class="rows-block flex-v" style="position: absolute;top:0;left:0;bottom: 0;right:0;overflow: auto;padding-bottom: 1em;" >\n        <div class=\'flex\' style="min-height: 3em;" v-if="row_filters.length > 0">\n            <com-filter class="flex" :heads="row_filters" :search_args="search_args"\n                        @submit="search()"></com-filter>\n            <div class="flex-grow"></div>\n        </div>\n\n        <div  v-if="ops.length>0">\n            <div class="oprations" style="padding: 5px">\n                <component v-for="op in ops"\n                           :is="op.editor"\n                           :ref="\'op_\'+op.name"\n                           :head="op"\n                           :disabled="get_attr(op.disabled)"\n                           v-show="! get_attr(op.hide)"\n                           @operation="on_operation(op)"></component>\n            </div>\n        </div>\n\n        <div class="box box-success flex-grow">\n            <div class="table-wraper" style="position: absolute;top:0;left:0;bottom: 0;right:0;">\n               <el-table class="table" ref="e_table"\n                              :data="rows"\n                              border\n                              show-summary\n                              :span-method="arraySpanMethod"\n                              :fit="false"\n                              :stripe="true"\n                              size="mini"\n                              @sort-change="sortChange($event)"\n                              @selection-change="handleSelectionChange"\n                              :summary-method="getSum"\n                              height="100%"\n                              style="width: 100%">\n\n                            <el-table-column\n                                    v-if="selectable"\n                                     type="selection"\n                                    :width="55">\n                            </el-table-column>\n                        <template  v-for="head in heads">\n                            <el-table-column v-if="head.editor"\n                                             :show-overflow-tooltip="is_show_tooltip(head) "\n                                             :label="head.label"\n                                             :sortable="is_sort(head)"\n                                             :width="head.width">\n                                <template slot-scope="scope">\n                                    <component :is="head.editor"\n                                               @on-custom-comp="on_td_event($event)"\n                                               :row-data="scope.row" :field="head.name" :index="scope.$index">\n                                    </component>\n\n                                </template>\n\n                            </el-table-column>\n\n                            <el-table-column v-else\n                                             :show-overflow-tooltip="is_show_tooltip(head) "\n                                             :prop="head.name"\n                                             :label="head.label"\n                                             :sortable="is_sort(head)"\n                                             :width="head.width">\n                            </el-table-column>\n\n                        </template>\n\n                    </el-table>\n            </div>\n\n        </div>\n          <div v-if="row_pages.crt_page">\n                    <el-pagination\n                        @size-change="on_perpage_change"\n                        @current-change="get_page"\n                        :current-page="row_pages.crt_page"\n                        :page-sizes="[20, 50, 100, 500]"\n                        :page-size="row_pages.perpage"\n                        layout="total, sizes, prev, pager, next, jumper"\n                        :total="row_pages.total">\n                </el-pagination>\n            </div>\n    </div>',
 
     methods: {
         on_show: function on_show() {
@@ -4218,43 +4242,22 @@ var ajax_table = {
             var dc = { fun: 'add_new', init_fields: init_fields };
             ex.assign(inn_kws, dc);
             ex.vueSuper(this, inn_kws);
+        },
+        arraySpanMethod: function arraySpanMethod(_ref) {
+            var row = _ref.row,
+                column = _ref.column,
+                rowIndex = _ref.rowIndex,
+                columnIndex = _ref.columnIndex;
+
+            if (this.table_layout) {
+                return this.table_layout[rowIndex + ',' + columnIndex] || [1, 1];
+            } else {
+                return [1, 1];
+            }
+            //var head = this.heads[columnIndex]
+
+            //return [1,1]
         }
-        //del_item:function () {
-        //    if (this.selected.length==0){
-        //        return
-        //    }
-        //    var del_obj={}
-        //    for(var j=0;j<this.selected.length;j++){
-        //        var pk = this.selected[j]
-        //        for(var i=0;i<this.rows.length;i++){
-        //            if(this.rows[i].pk.toString()==pk){
-        //                if(!del_obj[this.rows[i]._class]){
-        //                    del_obj[this.rows[i]._class]=[]
-        //                }
-        //                del_obj[this.rows[i]._class].push(pk)
-        //            }
-        //        }
-        //    }
-        //    var out_str=''
-        //    for(var key in del_obj){
-        //        out_str += (key+':'+ del_obj[key].join(':')+',')
-        //    }
-        //    location=ex.template("{engine_url}/del_rows?rows={rows}&next={next}",{engine_url:engine_url,
-        //        rows:encodeURI(out_str),
-        //        next:encodeURIComponent(location.href)})
-        //},
-        //goto_page:function (page) {
-        //    this.search_args._page=page
-        //    this.search()
-        //},
-        //add_new:function () {
-        //    var  url = ex.template('{engine_url}/{page}.edit/?next={next}',{
-        //        engine_url:engine_url,
-        //        page:page_name,
-        //        next:encodeURIComponent(ex.appendSearch(location.pathname,search_args))
-        //    })
-        //    location = url
-        //},
     }
 };
 
@@ -4534,7 +4537,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".sim-fields .table-fields {\n  margin: auto; }\n\n.sim-fields .field-label {\n  min-width: 5em;\n  text-align: left; }\n\n.sim-fields .field-input {\n  width: 23em;\n  text-align: left; }\n\n.sim-fields .submit-block {\n  margin-top: 1em;\n  text-align: left; }\n  .sim-fields .submit-block button {\n    min-width: 10em;\n    padding-left: 2em;\n    padding-right: 2em; }\n\n.sim-fields.field-panel.pop {\n  padding-top: 8px; }\n  .sim-fields.field-panel.pop .field-input {\n    width: 20em; }\n  .sim-fields.field-panel.pop .submit-block {\n    margin-top: 10px; }\n    .sim-fields.field-panel.pop .submit-block button {\n      min-width: 8em; }\n\n.sim-fields.field-panel.mb {\n  padding: 1em; }\n  .sim-fields.field-panel.mb .field-label {\n    min-width: 5em;\n    text-align: right; }\n  .sim-fields.field-panel.mb .field-input {\n    width: auto; }\n  .sim-fields.field-panel.mb .submit-block {\n    margin-top: 10px; }\n    .sim-fields.field-panel.mb .submit-block button {\n      width: 100%; }\n", ""]);
+exports.push([module.i, ".sim-fields .table-fields {\n  margin: auto; }\n\n.sim-fields .field-label {\n  min-width: 5em;\n  text-align: left; }\n\n.sim-fields .field-input {\n  width: 23em;\n  text-align: left; }\n\n.sim-fields .submit-block {\n  margin-top: 1em;\n  text-align: left; }\n  .sim-fields .submit-block button {\n    min-width: 10em;\n    padding-left: 2em;\n    padding-right: 2em; }\n\n.sim-fields.no-label .field-label-td {\n  display: none; }\n\n.sim-fields.no-label .field-input {\n  width: 100%;\n  text-align: left; }\n\n.sim-fields.no-label .table-fields {\n  width: 100%; }\n\n.sim-fields.no-label .submit-block {\n  margin-top: 1em;\n  text-align: left; }\n  .sim-fields.no-label .submit-block button {\n    width: 100%; }\n\n.sim-fields.field-panel.pop {\n  padding-top: 8px; }\n  .sim-fields.field-panel.pop .field-input {\n    width: 20em; }\n  .sim-fields.field-panel.pop .submit-block {\n    margin-top: 10px; }\n    .sim-fields.field-panel.pop .submit-block button {\n      min-width: 8em; }\n\n.sim-fields.field-panel.mb {\n  padding: 1em; }\n  .sim-fields.field-panel.mb .field-label {\n    min-width: 5em;\n    text-align: right; }\n  .sim-fields.field-panel.mb .field-input {\n    width: auto; }\n  .sim-fields.field-panel.mb .submit-block {\n    margin-top: 10px; }\n    .sim-fields.field-panel.mb .submit-block button {\n      width: 100%; }\n", ""]);
 
 // exports
 
@@ -5062,6 +5065,10 @@ var _array_obj_shower = __webpack_require__(32);
 
 var array_obj_shower = _interopRequireWildcard(_array_obj_shower);
 
+var _pop_table = __webpack_require__(94);
+
+var pop_table = _interopRequireWildcard(_pop_table);
+
 var _label_shower2 = __webpack_require__(8);
 
 var field_label_shower = _interopRequireWildcard(_label_shower2);
@@ -5162,6 +5169,14 @@ var _sm_link = __webpack_require__(19);
 
 var sm_link = _interopRequireWildcard(_sm_link);
 
+var _stack_widget = __webpack_require__(93);
+
+var stack_widget = _interopRequireWildcard(_stack_widget);
+
+var _el_tab_widget = __webpack_require__(92);
+
+var el_tab_widget = _interopRequireWildcard(_el_tab_widget);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 __webpack_require__(61);
@@ -5194,6 +5209,147 @@ __webpack_require__(64);
 
 
 // top_heads
+
+
+//ui
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Vue.component('com-widget-el-tab', {
+    props: ['ctx'],
+    template: '<div class="tab-full" style="position: absolute;bottom: 0;top: 0;left: 0;right: 0;" >\n     <el-tabs  v-if="ctx.tabs.length >1" type="border-card"\n                           @tab-click="handleClick"\n                           style="width: 100%;height: 100%;"\n                           :value="ctx.crt_tab_name" >\n\n                    <!--<el-tab-pane v-for="tab in normed_tab( tabgroup.tabs )"-->\n                    <el-tab-pane v-for="tab in ctx.tabs"\n                                 :key="tab.name"\n                                 :name="tab.name">\n                        <span slot="label" v-text="tab.label" ></span>\n\n                        <component :is="tab.com" :tab_head="tab"\n                                   :par_row="ctx.par_row"\n                                   :ref="\'_tab_\'+tab.name" @tab-event="on_tab_event($event)"></component>\n\n\n                    </el-tab-pane>\n                </el-tabs>\n\n                <component v-else v-for="tab in ctx.tabs"  :is="tab.com" :tab_head="tab"\n                           :par_row="ctx.par_row"\n                           :ref="\'_tab_\'+tab.name" @tab-event="on_tab_event($event)"></component>\n    </div>',
+    watch: {
+        'ctx.crt_tab_name': function ctxCrt_tab_name(v) {
+            this.show_tab(v);
+        }
+    },
+    mounted: function mounted() {
+        this.show_tab(this.ctx.crt_tab_name);
+    },
+    methods: {
+
+        show_tab: function show_tab(name) {
+            this.ctx.crt_tab_name = name;
+            //this.crt_tab_name = name
+            var self = this;
+            Vue.nextTick(function () {
+                self.$refs['_tab_' + name][0].on_show();
+            });
+        },
+        handleClick: function handleClick(tab, event) {
+            this.show_tab(tab.name);
+        }
+    }
+});
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(96);
+
+Vue.component('com-widget-stack', {
+    props: ['ctx_list'],
+    template: '<div class="com-widget-stack">\n        <component v-for="(ctx,index) in ctx_list" v-show="index==ctx_list.length-1"   :is="ctx.widget" :ctx="ctx"></component>\n    </div>'
+
+});
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/*
+
+ * */
+
+var pop_table = exports.pop_table = {
+    template: '<span @click="open_layer()" class="clickable">\n        <component v-if="head.inn_editor" :is="head.inn_editor" :rowData="rowData" :field="field" :index="index"></component>\n        <span v-else v-text="show_text"  ></span>\n    </span>',
+    props: ['rowData', 'field', 'index'],
+    created: function created() {
+        // find head from parent table
+        var table_par = this.$parent;
+        while (true) {
+            if (table_par.heads) {
+                break;
+            }
+            table_par = table_par.$parent;
+            if (!table_par) {
+                break;
+            }
+        }
+        if (table_par) {
+            var value = this.rowData[this.field];
+            this.head = ex.findone(table_par.heads, { name: this.field });
+        }
+    },
+    computed: {
+        show_text: function show_text() {
+            return this.rowData[this.field];
+        }
+    },
+    methods: {
+        open_layer: function open_layer() {
+            var table_ctx = init_table_ctx(this.head.table_ctx);
+            pop_table_layer(this.rowData, table_ctx, function () {});
+        }
+
+    }
+};
+Vue.component('com-table-pop-table', pop_table);
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)();
+// imports
+
+
+// module
+exports.push([module.i, ".com-widget-stack {\n  position: absolute;\n  bottom: 0;\n  top: 0;\n  left: 0;\n  right: 0; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(95);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./stack_widget.scss", function() {
+			var newContent = require("!!../../../../../../../../../coblan/webcode/node_modules/css-loader/index.js!../../../../../../../../../coblan/webcode/node_modules/sass-loader/lib/loader.js!./stack_widget.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

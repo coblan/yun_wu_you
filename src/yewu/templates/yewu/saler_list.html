@@ -15,7 +15,9 @@
             },
             methods:{
                 free_phone:function(){
-                    pop_layer({},'com-free-phone',function(){},{
+                    var win=pop_layer({},'com-free-phone',function(){
+                        layer.close(win)
+                    },{
                         title:'免费电话咨询',
                         area:['540px','360px']
                     })

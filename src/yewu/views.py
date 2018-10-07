@@ -77,9 +77,11 @@ class Home(View):
     def get_header_menu(self):
         ls = [
             {'label':'首页','link':'/p/home','name':'home'},
-            {'label':'工商注册','link':'/p/3d','name':'3d'},
-            {'label':'VR展馆','link':'/p/vr','name':'vr'},
-            {'label':'全景现场','link':'/p/fullscreen','name':'fullscreen'},            
+            {'label':'工商注册','link':'/yewu?yewu=2','name':'gongshang'},
+            {'label':'知识产权','link':'/yewu?yewu=33','name':'zhishi'},
+            {'label':'法律服务','link':'/yewu?yewu=63','name':'lawservice'},   
+            {'label':'人事社保','link':'/yewu?yewu=52','name':'human'},  
+             {'label':'一站财税','link':'/yewu?yewu=52','name':'calshui'},   
         ]
         return {'header_bar_menu':ls}
     

@@ -4,6 +4,7 @@ from helpers.director.shortcut import ModelTable,ModelFields,TablePage,page_dc,d
 from .structure import get_options
 from . import admin_yewu
 from . import admin_saler
+from . import admin_freephone
 # Register your models here.
 
 class BusinessPage(TablePage):

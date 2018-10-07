@@ -53,4 +53,8 @@ class Saler(models.Model):
     count = models.CharField('最近接单', max_length = 30, blank = True)
     comment = models.CharField('好评率', max_length = 30, blank = True)
     
+
+class FreePhone(models.Model):
+    phone = models.CharField('手机号', max_length = 30)
+    createtime = models.DateTimeField(verbose_name= '创建时间', auto_now= True)
     
