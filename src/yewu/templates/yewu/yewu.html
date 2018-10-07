@@ -24,17 +24,25 @@
 </style>
 
 <script>
+    var search_args = ex.parseSearch()
+    if(search_args.soldtype){
+        var crt_soldtype =ex.findone(yewu.soldtype,{id:parseInt(search_args.soldtype) })
+    }else{
+        var crt_soldtype=''
+    }
+
+
     $(function(){
         new Vue({
             el:'#there',
             data:{
                 yewu:yewu,
                 salers:salers,
-                crt_soldtype:'',
                 recom_saler:recom_saler,
+                crt_soldtype:crt_soldtype,
             },
             created:function(){
-                if(yewu.soldtype.length!=0){
+                if(! this.crt_soldtype && yewu.soldtype.length!=0){
                     this.crt_soldtype = this.yewu.soldtype[0]
                 }
             },
@@ -50,7 +58,9 @@
             },
             methods:{
                 set_crt_soldtype:function(soldtype){
-                    this.crt_soldtype=soldtype
+                    location=ex.appendSearch({soldtype:soldtype.id})
+//                    this.crt_soldtype=soldtype
+
                 },
                 on_tab_click:function(e){
                     var name= e.name
@@ -79,10 +89,20 @@
             <h2 v-text="yewu.title"></h2>
             <span v-text="yewu.sub_title"></span>
             <div class="price">
-                <span class="left-label">价 格:</span><span class="crt-price" >¥
-                <span v-text="crt_soldtype.price"></span>元
-            </span>
-                <span>市场价:</span><span class="org-price" v-text="crt_soldtype.org_price"></span>
+                <span class="left-label">价 格:</span>
+                <span v-if="crt_soldtype.price">
+                    <span class="crt-price" >¥
+                     <span v-text="crt_soldtype.price"></span>元
+                    </span>
+                </span>
+                <span v-else>
+                    <span class="crt-price" >面议</span>
+                </span>
+
+                <span>市场价:</span>
+                <span v-if="crt_soldtype.org_price" class="org-price" >
+                    <span v-text="crt_soldtype.org_price"></span>元
+                </span>
             </div>
 
             <div class="soldtype">

@@ -8,14 +8,11 @@
 
 
 <style>
-    body{
-        background-color: #ebebeb;
-    }
     .richs-wrap{
         width: 900px;
-
+        min-height: 500px;
         background-color: white;
-        border: 1px solid #cdcdcd;
+        border: 1px solid #f0f0f0;
         padding: 1em;
         margin: 2em auto;
         position: relative;
@@ -26,7 +23,7 @@
     }
 </style>
 
-<div id="there" class="" style="height: 100%">
+<div id="there" class="" style="height: 100%;background:#f7f7f7;padding-top: 1em;">
     <div class="richs-wrap">
 
         {{ rich_content | safe  }}
