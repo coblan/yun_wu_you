@@ -12,7 +12,7 @@ Vue.component('com-yewu-rich-item',{
     </div>`,
     methods:{
         goto_yewu:function(){
-            location='/yewu?yewu='+this.yewu.pk
+            location='/yewu?yewu='+this.yewu.yewu
         }
     }
 })

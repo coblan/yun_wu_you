@@ -28,6 +28,9 @@ class Home(View):
         return render(request,template,context=ctx)   
     
     def base_context(self): 
+        """
+        页面的基本数据。
+        """
         baseengine = BaseEngine()
         baseengine.request = self.request        
         ctx = {
