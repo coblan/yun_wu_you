@@ -5,7 +5,8 @@
 
   width: 100%;
   .links{
-      padding-top: 30px;
+      padding-top: 5em;
+      padding-bottom: 2em;
       min-height: 200px;
   }
   .menu-panel{
@@ -15,12 +16,16 @@
     .menu-1{
       align-self:flex-start;
       display: inline-block;
-      width: 200px;
-      margin-left: 1em;
+      //width: 200px;
+      margin: 2em;
+
+
       ul{
+          font-size: 80%;
           padding-left: 0;
           li{
             list-style:none;
+            padding-top: 0.4em;
           }
       }
 
