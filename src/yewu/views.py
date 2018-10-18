@@ -92,8 +92,10 @@ class Home(View):
         mainmenu_list = []
         for menu in MainMenu.objects.all():
             mainmenu_list.append(
-                {'label': menu.label, 'name': menu.label, 'action_group_list': [
-                    {'label': group.label, 'link': group.yewu.get_url() if group.yewu else '', 'action_list': [
+                {'label': menu.label, 'name': menu.label, 'icon': menu.icon,
+                 'action_group_list': [
+                    {'label': group.label, 'link': group.yewu.get_url() if group.yewu else '', 
+                     'action_list': [
                         {'label': act.label, 'link': act.yewu.get_url() if act.yewu else '', 'highlight': act.highlight,} for act in group.action_set.all()
                         ],} for group in menu.actiongroup_set.all()
                     ],}

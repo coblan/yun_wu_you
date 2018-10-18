@@ -12,8 +12,7 @@ Vue.component('com-kuaifawu-menu',{
     template:`<div class="kuaifawu-menu" @mouseenter="expand=true"  @mouseleave="on_mouseleave()">
 
             <span  class="menu-button">
-            <span class="action-icon"> <i class="fa fa-list-ul"></i></span>
-
+               <span class="action-icon"> <i class="fa fa-list-ul"></i></span>
                <span v-text="label"></span>
             </span>
 
@@ -47,9 +46,10 @@ Vue.component('com-kuaifawu-menu',{
 
 Vue.component('com-kuaifawu-menu-item',{
     props:['menu'],
-    template:`<div class="action">
+    template:`<div class="action com-kuaifawu-menu-item">
         <div class="center-v">
-            <span class="action-icon"><i class="fa fa-circle-o"></i></span>
+            <span class="icon" v-if="menu.icon"><img :src="menu.icon" alt=""></span>
+            <span v-else class="action-icon"><i class="fa fa-circle-o"></i></span>
             <span v-text="menu.label"></span>
         </div>
     </div>`
