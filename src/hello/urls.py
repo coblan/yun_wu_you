@@ -31,6 +31,9 @@ urlpatterns = [
     url(r'^pc/([\w\.]+)/?$',PcMenu.as_view(),name=PcMenu.url_name),
     url(r'^pc/?$',RedirectView.as_view(url='/pc/Business')),    
     url(r'^yewu/?$', YewuPage.as_view ()), 
+    
+    url(r'^yewu/([\w\.]+)/?$', YewuPage.as_view ()), 
+    
     url(r'^saler/?$', SalerListPage.as_view()), 
     url(r'^yewu/search/?$', SearchYewu.as_view()), 
     url(r'^p/home/?$',Home.as_view(),), 

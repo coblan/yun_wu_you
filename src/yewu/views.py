@@ -80,11 +80,11 @@ class Home(View):
     def get_header_menu(self):
         ls = [
             {'label':'首页','link':'/p/home','name':'home'},
-            {'label':'工商注册','link':'/yewu?yewu=2','name':'gongshang'},
-            {'label':'知识产权','link':'/yewu?yewu=33','name':'zhishi'},
-            {'label':'法律服务','link':'/yewu?yewu=63','name':'lawservice'},   
-            {'label':'人事社保','link':'/yewu?yewu=52','name':'human'},  
-             {'label':'一站财税','link':'/yewu?yewu=52','name':'calshui'},   
+            {'label':'工商注册','link':'/yewu/2','name':'gongshang'},
+            {'label':'知识产权','link':'/yewu/33','name':'zhishi'},
+            {'label':'法律服务','link':'/yewu/63','name':'lawservice'},   
+            {'label':'人事社保','link':'/yewu/52','name':'human'},  
+             {'label':'一站财税','link':'/yewu/52','name':'calshui'},   
         ]
         return {'header_bar_menu':ls}
     
@@ -120,8 +120,15 @@ class Home(View):
         return 'yewu/home.html'
     
 class YewuPage(Home):
+    def get(self, request, pk = None): 
+        if pk:
+            self.yewu_pk = pk
+        else:
+            self.yewu_pk = request.GET.get('yewu')
+        return super().get(request)
+    
     def extraCtx(self):
-        yewu_pk = self.request.GET.get('yewu')
+        yewu_pk = self.yewu_pk
         yewu_inst = Yewu.objects.get(pk = yewu_pk)
         yewu_dict = to_dict(yewu_inst)
         

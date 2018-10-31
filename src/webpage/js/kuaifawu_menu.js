@@ -48,14 +48,16 @@ Vue.component('com-kuaifawu-menu-item',{
     props:['menu'],
     template:`<div class="action com-kuaifawu-menu-item">
         <div class="center-v">
-            <span class="icon" v-if="menu.icon"><img :src="menu.icon" alt=""></span>
+            <!--<span class="icon" v-if="menu.icon"><img :src="menu.icon" alt=""></span>-->
+            <span class="icon" v-if="menu.icon" v-html="menu.icon"></span>
             <span v-else class="action-icon"><i class="fa fa-circle-o"></i></span>
-            <span v-text="menu.label"></span>
+            <span v-text="menu.label" style="display: inline-block;padding-left: 0.5rem"></span>
         </div>
     </div>`
 })
 
 Vue.component('com-kuaifawu-menu-links',{
+    // 三级菜单  点击直接跳转页面
     props:['menu'],
     template:`<div class="kuaifawu-menu-link" >
         <table>

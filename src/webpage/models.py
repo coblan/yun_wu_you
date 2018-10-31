@@ -17,7 +17,7 @@ class MainMenu(models.Model):
     label = models.CharField('显示名', max_length = 30)
     is_show = models.BooleanField('显示', default = True)
     priority = models.IntegerField('优先级', default = 0)
-    icon = PictureField('图标', blank = True, max_length = 300)
+    icon = models.CharField('图标', blank = True, max_length = 300, help_text = '请填写html图片代码,例如font awesome代码')
     
     def __str__(self): 
         return self.label    

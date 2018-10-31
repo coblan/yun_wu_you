@@ -19,7 +19,7 @@ class Yewu(models.Model):
     group = models.ForeignKey(YewuGroup, verbose_name = '业务分组')
     
     def get_url(self): 
-        return '/yewu?yewu=%s' % self.pk
+        return '/yewu/%s' % self.pk
     
     def __str__(self): 
         if getattr(self, 'group', None):

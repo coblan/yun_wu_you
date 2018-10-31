@@ -12,6 +12,9 @@
   .menu-panel{
     margin-right: 60px;
     position: relative;
+    padding-right: 20px;
+
+    justify-content: space-around;
 
     .menu-1{
       align-self:flex-start;
@@ -55,7 +58,7 @@
 
   .wechat{
 
-      width: 300px;
+      width: 330px;
       align-items:center;
 
       img{

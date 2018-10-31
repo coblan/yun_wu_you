@@ -115,9 +115,10 @@
 
             <div class="place">
                 <span class="left-label">地 区：</span>
-                <select name="" id="" class="form-control">
-                    <option v-for="opt in yewu.area_options" value="opt.value" v-text="opt.label"></option>
-                </select>
+                <com-field-china-address :head="{name:'dog'}" :row="{}"></com-field-china-address>
+                <!--<select name="" id="" class="form-control">-->
+                    <!--<option v-for="opt in yewu.area_options" value="opt.value" v-text="opt.label"></option>-->
+                <!--</select>-->
             </div>
 
             <div class="order-soldtype">
