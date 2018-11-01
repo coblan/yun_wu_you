@@ -70,7 +70,7 @@
                 },
                 see_saler_list:function(){
                     location='/saler'
-                }
+                },
             }
         })
 
@@ -91,8 +91,8 @@
             <div class="price">
                 <span class="left-label">价 格:</span>
                 <span v-if="crt_soldtype.price">
-                    <span class="crt-price" >¥
-                     <span v-text="crt_soldtype.price"></span>元
+                    <span class="crt-price" ><span v-if="!isNaN(crt_soldtype.price)">¥</span>
+                     <span v-text="crt_soldtype.price"></span><span v-if="!isNaN(crt_soldtype.price)">元</span>
                     </span>
                 </span>
                 <span v-else>
@@ -101,7 +101,7 @@
 
                 <span>市场价:</span>
                 <span v-if="crt_soldtype.org_price" class="org-price" >
-                    <span v-text="crt_soldtype.org_price"></span>元
+                    <span v-text="crt_soldtype.org_price"></span><span v-if="!isNaN(crt_soldtype.org_price)">元</span>
                 </span>
             </div>
 

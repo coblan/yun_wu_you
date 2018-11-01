@@ -31,8 +31,8 @@ class SoldType(models.Model):
     """
     """
     label=models.CharField('类型名称',max_length=100)
-    org_price = models.FloatField('市场价',blank=True)
-    price = models.FloatField('价格',blank=True)
+    org_price = models.CharField('市场价',blank=True, max_length=100)
+    price = models.CharField('价格',blank=True, max_length=100)
     yewu= models.ForeignKey(Yewu,verbose_name='业务')
     priority = models.IntegerField(verbose_name= '优先级', default= 0)
     
