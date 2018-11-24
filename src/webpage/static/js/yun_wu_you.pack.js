@@ -564,10 +564,10 @@ __webpack_require__(33);
 
 Vue.component('com-search-kuaifawu', {
     props: ['search_args', 'head'],
-    template: '<div class="search-kuaifawu">\n        <input type="text" :placeholder="head.placeholder" v-model="search_args.kwd" @keyup.13="search()"/>\n        <span class="search-btn" @click="search()">\u641C\u7D22</span>\n    </div>',
+    template: '<div class="search-kuaifawu">\n        <input type="text" :placeholder="head.placeholder" v-model="search_args.kwd" @keyup.13="search()"/>\n        <span class="search-btn clickable" @click="search()">\u641C\u7D22</span>\n    </div>',
     methods: {
         search: function search() {
-            location = ex.appendSearch('/yewu/search', { kwd: this.search_args.kwd });
+            location = ex.appendSearch('/search', { kwd: this.search_args.kwd });
         }
     }
 });

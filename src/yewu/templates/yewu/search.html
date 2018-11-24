@@ -15,10 +15,7 @@
             },
             methods:{
                 detail:function(yewu){
-                    location= ex.appendSearch('/yewu',{
-                        yewu:yewu.id,
-                        kwd:search_args.kwd
-                    })
+                    location=`/yewu/${yewu.id}`
                 }
             }
         })

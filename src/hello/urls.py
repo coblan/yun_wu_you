@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^yewu/([\w\.]+)/?$', YewuPage.as_view ()), 
     
     url(r'^saler/?$', SalerListPage.as_view()), 
-    url(r'^yewu/search/?$', SearchYewu.as_view()), 
+    url(r'^search/?$', SearchYewu.as_view()), 
     url(r'^p/home/?$',Home.as_view(),), 
     url(r'^rich/([\w\.]+)/?$',RichPagePort.as_view(),), 
     url(r'^$',Home.as_view(),), 

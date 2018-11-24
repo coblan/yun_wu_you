@@ -7,6 +7,8 @@ class FreePhonePage(TablePage):
         exclude = []
 
 class FreePhoneForm(ModelFields):
+    def __init__(self, dc={}, pk=None, crt_user=None, nolimit=False, *args, **kw): 
+        return super().__init__(dc, pk, crt_user, nolimit= True, *args, **kw)
     class Meta:
         model = FreePhone
         exclude = []
