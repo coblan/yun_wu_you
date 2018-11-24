@@ -22,6 +22,7 @@ class YewuRecomPanelPage(TablePage):
             if head['name'] == 'title':
                 head['editor'] = 'com-table-switch-to-tab'
                 head['tab_name']='base_form'
+                head['ctx_name'] = 'YewuRecomPanelTabs'
             return head
         
         def get_context(self): 
@@ -30,7 +31,7 @@ class YewuRecomPanelPage(TablePage):
             ls = [
                 {'name':'base_form',
                  'label':'基本信息',
-                 'com':'com_tab_fields',
+                 'com':'com-tab-fields',
                  'get_data':{
                      'fun':'get_row',
                      'kws':{
@@ -50,7 +51,7 @@ class YewuRecomPanelPage(TablePage):
                 {
                     'name': 'soldtype',
                     'label': '推介业务',
-                    'com': 'com_tab_table',
+                    'com': 'com-tab-table',
                     'par_field': 'pk',
                     'tab_field': 'recom_panel',
                     'table_ctx': YewuRecomItemTable(crt_user= self.crt_user).get_head_context(),
@@ -58,7 +59,9 @@ class YewuRecomPanelPage(TablePage):
                 }
 
             ]
-            ctx['tabs'] = ls
+            ctx['named_ctx'] = {
+                'YewuRecomPanelTabs': ls,
+            }
             return ctx
 
 class YewuRecomForm(ModelFields):

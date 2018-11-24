@@ -30,7 +30,7 @@ class PcMenu(BaseEngine):
             
             {'label':'业务管理','icon':fa('fa-user'),'visible':True,
                  'submenu':[
-                    {'label':'区域','url':page('Area'),'visible':can_touch(User, crt_user)},
+                    #{'label':'区域','url':page('Area'),'visible':can_touch(User, crt_user)},
                     {'label':'业务分组','url':page('yewugroup'),'visible':can_touch(User, crt_user)},
                     {'label': '业务', 'url': page('Business'),'icon':fa('fa-home'), 'visible':True,}, 
                     {'label':'业务员管理','url':page('saler'),'visible':can_touch(User, crt_user)},

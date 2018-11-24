@@ -15,12 +15,14 @@ class RichPageTablePg(TablePage):
             for op in ops:
                 if op['name'] == 'add_new':
                     op['tab_name'] = 'edit_form'
+                    op['ctx_name'] = 'richpageTabs'
             return ops
         
         def dict_head(self, head): 
             if head['name'] == 'id':
                 head['editor'] = 'com-table-switch-to-tab'
                 head['tab_name']='edit_form'
+                head['ctx_name'] = 'richpageTabs'
             return head
         
 
@@ -30,7 +32,7 @@ class RichPageTablePg(TablePage):
         ls = [
           {'name':'edit_form',
            'label':'基本信息',
-           'com':'com_tab_fields',
+           'com':'com-tab-fields',
            'get_data':{
                'fun':'get_row',
                'kws':{
@@ -47,7 +49,9 @@ class RichPageTablePg(TablePage):
            'ops': form_obj.get_operations()                 
              }, 
           ]
-        ctx['tabs'] = ls
+        ctx['named_ctx'] = {
+            'richpageTabs': ls
+            }
         return ctx
     
 class RichForm(ModelFields):

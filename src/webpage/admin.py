@@ -11,7 +11,7 @@ from . import admin_qq
 from . import admin_beian
 # Register your models here.
 class BannerPage(TablePage):
-    template = 'jb_admin/table.html'
+    template = 'jb_admin/table_new.html'
     def get_label(self): 
         return '宣传图画'
     

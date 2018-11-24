@@ -7,6 +7,7 @@ class YewuGroupPage(TablePage):
         return '业务分组'
     
     class tableCls(ModelTable):
+        pop_edit_field = 'id'
         model = YewuGroup
         exclude = []
 

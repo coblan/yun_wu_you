@@ -3,7 +3,7 @@ from .models import RichPage, FooterLink
 
 
 class FooterLinkPage(TablePage):
-    template = 'jb_admin/table.html'
+    template = 'jb_admin/table_new.html'
     def get_label(self): 
         return 'Footer链接'
     

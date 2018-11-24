@@ -2,7 +2,7 @@ from helpers.director.shortcut import ModelTable, TablePage, ModelFields, page_d
 from .models import MainMenu, ActionGroup, Action
 
 class MainMenuPage(TablePage):
-    template = 'jb_admin/table.html'
+    template = 'jb_admin/table_new.html'
     def get_label(self): 
         return '主菜单'
     
@@ -74,6 +74,17 @@ class ActionPage(TablePage):
     def get_label(self): 
         return '业务链接'
     
+    def get_context(self): 
+        ctx = super().get_context()
+        ctx['named_ctx'] = {
+            'group_options': [],
+        }
+        ctx['childStore_event_slot'] = [
+            {'event': 'menu_filter_changed', 'fun': 'update_ctx',
+             'kws': "rt={director_name:'groupoptions.dynamic',ctx_name:'group_options',post_data:{menu_pk:scope}}",}
+        ]
+        return ctx
+    
     class tableCls(ModelTable):
         pop_edit_field = 'id'
         model = Action
@@ -96,24 +107,26 @@ class ActionPage(TablePage):
         
         class filters(RowFilter):
             names = ['group']
-            fields_sort = ['menu', 'group']
+            fields_sort = [ 'menu', 'group',]
             def getExtraHead(self): 
                 return [
                     {'name': 'menu', 'label': '主菜单','editor': 'com-select-filter','options': [
                         {'value': menu.pk, 'label': str(menu),} for menu in MainMenu.objects.all()
-                        ],}, 
+                        ],'changed_emit': 'menu_filter_changed',}, 
                     {'name': 'group',
                      'label': '链接分组',
-                     'editor': 'com-related-select-filter',
+                     #'editor': 'com-related-select-filter',
+                     'editor': 'com-select-filter',
+                     'ctx_name': 'group_options',
                      'options': [],
-                     'related': 'menu',
-                     'director_name': 'groupoptions.dynamic'
-                     }
+                     #'related': 'menu',
+                     #'director_name': 'groupoptions.dynamic'
+                     }, 
                 ]
             
             @staticmethod
-            def getGroupOptions(related):
-                menu_pk = related 
+            def getGroupOptions(menu_pk):
+                #menu_pk = related 
                 query = ActionGroup.objects.filter(menu=menu_pk)
                 options = [{'value': x.pk, 'label': str(x)} for x in query]
                 return options            

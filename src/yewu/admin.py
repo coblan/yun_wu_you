@@ -22,6 +22,7 @@ class BusinessPage(TablePage):
             for op in ops:
                 if op['name'] == 'add_new':
                     op['tab_name'] = 'bus_form'
+                    op['ctx_name'] = 'BusinessTabs'
             return ops    
         
         def dict_head(self, head):
@@ -36,6 +37,7 @@ class BusinessPage(TablePage):
             if head['name'] == 'title':
                 head['editor'] = 'com-table-switch-to-tab'
                 head['tab_name']='bus_form'
+                head['ctx_name'] = 'BusinessTabs'
             #if head['name'] =='name':
                 #head['editor'] ='com-table-label-shower'
             
@@ -43,13 +45,13 @@ class BusinessPage(TablePage):
                 head['options'] = [{'value':x.pk,'label':str(x)} for x in Area.objects.all()]
             return head    
         
-        def get_context(self): 
-            ctx = super().get_context()
-            ls = [
-                {}
-            ]
-            ctx['tab'] = ls
-            return ctx
+        #def get_context(self): 
+            #ctx = super().get_context()
+            #ls = [
+                #{}
+            #]
+            #ctx['tab'] = ls
+            #return ctx
         
         class filters(RowFilter):
             names = ['group']
@@ -60,7 +62,7 @@ class BusinessPage(TablePage):
         ls = [
           {'name':'bus_form',
            'label':'基本信息',
-           'com':'com_tab_fields',
+           'com':'com-tab-fields',
            'get_data':{
                'fun':'get_row',
                'kws':{
@@ -79,15 +81,17 @@ class BusinessPage(TablePage):
           {
               'name': 'soldtype',
               'label': '销售套餐',
-              'com': 'com_tab_table',
+              'com': 'com-tab-table',
               'par_field': 'pk',
               'tab_field': 'yewu',
               'table_ctx': SoldTypeTable(crt_user= self.crt_user).get_head_context(),
-              'show': 'pk != null',
+              'show': 'scope.par_row.pk != null',
               'visible': True,
           }
         ]
-        ctx['tabs'] =ls
+        ctx['named_ctx'] = {
+            'BusinessTabs': ls,
+        }
         return ctx
     
     
