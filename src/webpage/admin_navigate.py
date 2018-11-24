@@ -74,16 +74,16 @@ class ActionPage(TablePage):
     def get_label(self): 
         return '业务链接'
     
-    def get_context(self): 
-        ctx = super().get_context()
-        ctx['named_ctx'] = {
-            'group_options': [],
-        }
-        ctx['childStore_event_slot'] = [
-            {'event': 'menu_filter_changed', 'fun': 'update_ctx',
-             'kws': "rt={director_name:'groupoptions.dynamic',ctx_name:'group_options',post_data:{menu_pk:scope}}",}
-        ]
-        return ctx
+    #def get_context(self): 
+        #ctx = super().get_context()
+        #ctx['named_ctx'] = {
+            #'group_options': [],
+        #}
+        #ctx['childStore_event_slot'] = [
+            #{'event': 'menu_filter_changed', 'fun': 'update_ctx',
+             #'kws': "rt={director_name:'groupoptions.dynamic',ctx_name:'group_options',post_data:{menu_pk:scope}}",}
+        #]
+        #return ctx
     
     class tableCls(ModelTable):
         pop_edit_field = 'id'
@@ -117,10 +117,13 @@ class ActionPage(TablePage):
                      'label': '链接分组',
                      #'editor': 'com-related-select-filter',
                      'editor': 'com-select-filter',
-                     'ctx_name': 'group_options',
+                     #'ctx_name': 'group_options',
+                     'update_options_on': 'menu_filter_changed',
+                     'director_name': 'groupoptions.dynamic', 
+                     'post_data': "rt={menu_pk:scope.event}",
                      'options': [],
                      #'related': 'menu',
-                     #'director_name': 'groupoptions.dynamic'
+                     
                      }, 
                 ]
             
